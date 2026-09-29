@@ -522,7 +522,12 @@ export function adminApiPlugin({
             store.messages.push(entry);
             if (store.messages.length > 200) store.messages = store.messages.slice(-200);
             writeJson(messagesPath, store);
-            return send(res, 200, { saved: true, emailed: entry.emailed, note: delivery.note || "" });
+            return send(res, 200, {
+              saved: true,
+              emailed: entry.emailed,
+              note: delivery.note || "",
+              inbox: entry.emailed ? "" : currentInbox(),
+            });
           }
 
           if (req.method === "GET" && pathname === "/api/messages") {

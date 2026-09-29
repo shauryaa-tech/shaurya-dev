@@ -7,6 +7,29 @@ import {
 import { KineticLine, Reveal } from "../components/Kinetic";
 import { useSiteContent } from "../site-content";
 
+async function sendToInbox(inbox, form) {
+  try {
+    const response = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(inbox)}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({
+        _subject: `Shaurya.dev · ${form.subject} — ${form.name}`,
+        _template: "box",
+        _captcha: "false",
+        _replyto: form.email,
+        name: form.name,
+        email: form.email,
+        message: form.message,
+      }),
+    });
+    const data = await response.json().catch(() => ({}));
+    if (String(data.success) === "true") return { ok: true, activate: false };
+    return { ok: false, activate: /activat|confirm/i.test(String(data.message || "")) };
+  } catch {
+    return { ok: false, activate: false };
+  }
+}
+
 export default function Contact() {
   const { site } = useSiteContent();
   const profile = site.profile;
@@ -58,6 +81,16 @@ export default function Contact() {
         return;
       }
       if (!data.emailed) {
+        const relayed = data.inbox ? await sendToInbox(data.inbox, form) : { ok: false, activate: false };
+        if (relayed.ok) {
+          toast.success("Message sent — it lands straight in my inbox. I'll reply soon!");
+          setForm({ name: "", email: "", subject: subjects[0], message: "" });
+          return;
+        }
+        if (relayed.activate) {
+          toast.error("Gmail mein Activate Form wala mail khula hoga. Us link par ek baar click karo, phir yeh message dubara bhejo.");
+          return;
+        }
         toast.error("Saved on the site, but the email did not reach Gmail.");
         return;
       }
