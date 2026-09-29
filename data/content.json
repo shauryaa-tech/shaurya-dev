@@ -1,0 +1,493 @@
+{
+  "theme": {
+    "mode": "dark",
+    "cyan": "#00f0ff",
+    "violet": "#a855f7",
+    "ink": "#030712",
+    "panel": "#0b0f19"
+  },
+  "profile": {
+    "name": "Shaurya Pratap Singh",
+    "firstName": "Shaurya",
+    "role": "AI/ML Engineer & Software Engineer",
+    "location": "Vapi, Gujarat, India",
+    "email": "shauryasingh2222004@gmail.com",
+    "phone": "+91 78978 58298",
+    "linkedin": "https://www.linkedin.com/in/shaurya-pratap-singh-8240ba344/",
+    "github": "https://github.com/shauryaa-tech",
+    "resume": "/Shaurya_Pratap_Singh_Resume.pdf",
+    "brand": "SHAURYA",
+    "brandAccent": ".DEV",
+    "githubLabel": "github.com/shauryaa-tech",
+    "linkedinLabel": "linkedin.com/in/shaurya-pratap-singh-8240ba344"
+  },
+  "nav": {
+    "links": [
+      {
+        "id": "about",
+        "label": "About"
+      },
+      {
+        "id": "skills",
+        "label": "Skills"
+      },
+      {
+        "id": "journey",
+        "label": "Journey"
+      },
+      {
+        "id": "projects",
+        "label": "Projects"
+      }
+    ],
+    "resumeLabel": "Resume",
+    "talkLabel": "Let's Talk",
+    "mobileResume": "Download Resume"
+  },
+  "hero": {
+    "badge": "Open to AI/ML & Software roles",
+    "line1": "I TEACH",
+    "line2": "MACHINES",
+    "line3": "TO",
+    "accent": "THINK.",
+    "bio": "AI/ML Engineer & Software Engineer from Vapi, India — shipping Generative AI systems, RAG chatbots and intelligent automation that actually work in production.",
+    "explore": "Explore My Work",
+    "resume": "Download Resume",
+    "scroll": "Scroll",
+    "rotate": "Drag to rotate",
+    "chips": [
+      "GPT",
+      "RAG",
+      ".NET",
+      "Gemini"
+    ],
+    "visual": "model",
+    "model": "/models/robot.glb",
+    "image": ""
+  },
+  "metrics": [
+    {
+      "value": "9/10",
+      "label": "CGPA",
+      "sub": "Computer Engineering"
+    },
+    {
+      "value": "4",
+      "label": "AI Projects",
+      "sub": "shipped & published"
+    },
+    {
+      "value": "2x",
+      "label": "Podiums",
+      "sub": "national hackathons"
+    }
+  ],
+  "marquee": [
+    "ARTIFICIAL INTELLIGENCE",
+    "GENERATIVE AI",
+    "RAG SYSTEMS",
+    "PYTHON",
+    "REACT.JS",
+    ".NET",
+    "LANGCHAIN",
+    "PROMPT ENGINEERING",
+    "NLP",
+    "MONGODB"
+  ],
+  "about": {
+    "index": "01",
+    "eyebrow": "About",
+    "title": "THE HUMAN BEHIND",
+    "accent": "THE MACHINE",
+    "leadBefore": "I'm an",
+    "leadCyan": "AI/ML Engineer",
+    "leadMid": "and",
+    "leadViolet": "Software Engineer",
+    "leadAfter": "with hands-on experience building scalable machine-learning systems, Generative AI solutions and .NET applications.",
+    "body": "From CRM automation to RAG-based chatbots and intelligent document processing, I turn real business problems into working AI products. I publish my AI/ML and Generative AI projects on GitHub, practice Data Structures & Algorithms regularly, and constantly explore emerging AI frameworks and tools.",
+    "eduLabel": "Education",
+    "eduTitle": "B.E. Computer Engineering · CGPA 9/10",
+    "eduMeta": "Laxmi Institute of Technology · 2022—2026",
+    "terminalTitle": "shaurya@ai-lab: ~",
+    "cards": [
+      {
+        "num": "01",
+        "title": "Generative AI Systems",
+        "desc": "RAG chatbots, GPT & Gemini integrations, LangChain pipelines and prompt engineering that reduce hallucination and ship real value."
+      },
+      {
+        "num": "02",
+        "title": "Full-Stack Engineering",
+        "desc": ".NET, React.js, Flask and PHP — from database schema to polished UI, with MongoDB, MySQL and SQL Server underneath."
+      },
+      {
+        "num": "03",
+        "title": "Intelligent Automation",
+        "desc": "OCR document pipelines, CRM workflow automation and no-code tooling with N8N, Zapier and Make that erase manual work."
+      }
+    ],
+    "terminal": [
+      {
+        "text": "$ whoami",
+        "tone": "cmd"
+      },
+      {
+        "text": "shaurya-pratap-singh — AI/ML & Software Engineer",
+        "tone": "out"
+      },
+      {
+        "text": "$ ls projects/",
+        "tone": "cmd"
+      },
+      {
+        "text": "samridh-crm  resume-analyzer  rag-pdf-chatbot  eva",
+        "tone": "out"
+      },
+      {
+        "text": "$ status --current",
+        "tone": "cmd"
+      },
+      {
+        "text": "[ok] open-to-work: true",
+        "tone": "ok"
+      },
+      {
+        "text": "[ok] learning: always",
+        "tone": "ok"
+      }
+    ]
+  },
+  "skills": {
+    "index": "02",
+    "eyebrow": "Skills",
+    "title": "TECHNOLOGICAL",
+    "accent": "ARSENAL",
+    "groups": [
+      {
+        "icon": "Brain",
+        "title": "Generative AI",
+        "skills": [
+          {
+            "name": "OpenAI GPT",
+            "level": 5
+          },
+          {
+            "name": "Google Gemini API",
+            "level": 5
+          },
+          {
+            "name": "RAG",
+            "level": 5
+          },
+          {
+            "name": "Prompt Engineering",
+            "level": 5
+          },
+          {
+            "name": "LangChain",
+            "level": 4
+          },
+          {
+            "name": "NLP / TF-IDF",
+            "level": 4
+          }
+        ]
+      },
+      {
+        "icon": "Braces",
+        "title": "Languages",
+        "skills": [
+          {
+            "name": "Python",
+            "level": 5
+          },
+          {
+            "name": "C# / .NET",
+            "level": 4
+          },
+          {
+            "name": "JavaScript",
+            "level": 4
+          },
+          {
+            "name": "PHP",
+            "level": 3
+          }
+        ]
+      },
+      {
+        "icon": "Code2",
+        "title": "Web Development",
+        "skills": [
+          {
+            "name": "React.js",
+            "level": 4
+          },
+          {
+            "name": "Flask",
+            "level": 4
+          },
+          {
+            "name": ".NET",
+            "level": 4
+          },
+          {
+            "name": "HTML / CSS",
+            "level": 4
+          }
+        ]
+      },
+      {
+        "icon": "Database",
+        "title": "Databases",
+        "skills": [
+          {
+            "name": "MongoDB",
+            "level": 4
+          },
+          {
+            "name": "MySQL",
+            "level": 4
+          },
+          {
+            "name": "SQL Server",
+            "level": 3
+          }
+        ]
+      },
+      {
+        "icon": "Wrench",
+        "title": "Tools & Platforms",
+        "skills": [
+          {
+            "name": "GitHub / VS Code",
+            "level": 5
+          },
+          {
+            "name": "N8N / Zapier / Make",
+            "level": 4
+          },
+          {
+            "name": "Postman",
+            "level": 4
+          },
+          {
+            "name": "VAPI / XAMPP",
+            "level": 3
+          }
+        ]
+      }
+    ]
+  },
+  "journey": {
+    "index": "03",
+    "eyebrow": "Journey",
+    "title": "EXPERIENCE",
+    "accent": "TIMELINE",
+    "educationLabel": "// Education"
+  },
+  "experience": [
+    {
+      "role": "Software Engineer (.NET)",
+      "company": "Cloudmex Technologies",
+      "place": "Vapi, Gujarat, India",
+      "period": "Jun 2026 — Present",
+      "current": true,
+      "bullets": [
+        "Developing and maintaining applications using the .NET framework.",
+        "Contributing to software development workflows and collaborating with the team on building and deploying business applications."
+      ],
+      "tags": [
+        ".NET",
+        "C#",
+        "SQL Server"
+      ]
+    },
+    {
+      "role": "AI/ML Intern",
+      "company": "Enjay IT Solutions Ltd",
+      "place": "India",
+      "period": "Jan 2026 — Apr 2026",
+      "current": false,
+      "bullets": [
+        "Built an AI-powered Business Card Scanner leveraging OCR and AI to automatically extract, save and categorize contact details from physical cards.",
+        "Implemented intelligent data processing pipelines for structured storage and retrieval of customer information in CRM workflows.",
+        "Developed real-world AI/ML applications with Python, reducing manual processing time."
+      ],
+      "tags": [
+        "Python",
+        "OCR",
+        "NLP",
+        "CRM"
+      ]
+    },
+    {
+      "role": "AI Intern",
+      "company": "IBM SkillsBuild",
+      "place": "Remote",
+      "period": "Jun 2025 — Jul 2025",
+      "current": false,
+      "bullets": [
+        "Built Eva, an interactive AI assistant using React.js and Google Gemini API with real-time dynamic UI interaction.",
+        "Developed AI-powered applications using Python and Generative AI concepts as part of IBM's structured AI curriculum.",
+        "Gained applied experience in ML workflows, REST APIs and real-time AI system integration."
+      ],
+      "tags": [
+        "React.js",
+        "Gemini API",
+        "Python",
+        "REST APIs"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "title": "B.E. — Computer Engineering",
+      "org": "Laxmi Institute of Technology",
+      "meta": "2022 — 2026 · CGPA 9/10",
+      "highlight": true
+    },
+    {
+      "title": "Higher Secondary (12th)",
+      "org": "Manasthali Education Centre, U.P.",
+      "meta": "2020 · 60%",
+      "highlight": false
+    },
+    {
+      "title": "Secondary (10th)",
+      "org": "Anita Memorial Convent School, U.P.",
+      "meta": "2018 · 66%",
+      "highlight": false
+    }
+  ],
+  "projectsSection": {
+    "index": "04",
+    "eyebrow": "Projects",
+    "title": "SHIPPED &",
+    "accent": "PUBLISHED",
+    "more": "More on GitHub — github.com/shauryaa-tech"
+  },
+  "projects": [
+    {
+      "num": "01",
+      "icon": "Users",
+      "title": "AI Powered Samridh CRM",
+      "desc": "Full-featured CRM system with AI-driven lead management and workflow automation. Generative AI APIs deliver real-time business insights, lead scoring and dashboard analytics.",
+      "tags": [
+        "PHP",
+        "MySQL",
+        "GenAI APIs",
+        "XAMPP"
+      ],
+      "repo": "https://github.com/shauryaa-tech",
+      "repoLabel": "View GitHub"
+    },
+    {
+      "num": "02",
+      "icon": "FileSearch",
+      "title": "AI Resume Analyzer",
+      "desc": "NLP-based resume evaluation tool using TF-IDF vectorization and cosine similarity to score resumes against job descriptions and generate AI-driven improvement suggestions.",
+      "tags": [
+        "Python",
+        "NLP",
+        "TF-IDF",
+        "Cosine Similarity"
+      ],
+      "repo": "https://github.com/shauryaa-tech/AI_Resume_Analyzer",
+      "repoLabel": "View Code"
+    },
+    {
+      "num": "03",
+      "icon": "MessagesSquare",
+      "title": "AI PDF Chatbot (RAG)",
+      "desc": "Document-based Q&A system using Retrieval-Augmented Generation with FAISS vector search and text embeddings — high-accuracy answers with significantly reduced hallucination.",
+      "tags": [
+        "Python",
+        "FAISS",
+        "LangChain",
+        "Embeddings"
+      ],
+      "repo": "https://github.com/shauryaa-tech",
+      "repoLabel": "View GitHub"
+    },
+    {
+      "num": "04",
+      "icon": "Mic",
+      "title": "Eva — AI Voice & Chat Assistant",
+      "desc": "Real-time AI assistant with a dynamic React.js UI integrated with the Google Gemini API, supporting conversational AI interactions and voice-based responses.",
+      "tags": [
+        "React.js",
+        "Gemini API",
+        "Voice"
+      ],
+      "repo": "https://github.com/shauryaa-tech/Eva-Assistant",
+      "repoLabel": "View Code"
+    }
+  ],
+  "achievementsSection": {
+    "index": "05",
+    "eyebrow": "Proof of Work",
+    "title": "WINS &",
+    "accent": "CERTIFICATIONS"
+  },
+  "achievements": [
+    {
+      "icon": "Trophy",
+      "title": "Winner — Code Crasher",
+      "org": "National Level Tech Fest",
+      "meta": "1st Place",
+      "gold": true
+    },
+    {
+      "icon": "Medal",
+      "title": "2nd Place — Brain Buster",
+      "org": "National Level Tech Fest",
+      "meta": "Runner-up",
+      "gold": false
+    },
+    {
+      "icon": "Award",
+      "title": "Java Programming Fundamentals",
+      "org": "Infosys Certification",
+      "meta": "Certified",
+      "gold": false
+    },
+    {
+      "icon": "BadgeCheck",
+      "title": "Code Unnati Program",
+      "org": "SAP & Edunet Foundation",
+      "meta": "Certified",
+      "gold": false
+    }
+  ],
+  "footer": {
+    "index": "06",
+    "eyebrow": "Contact",
+    "title": "LET'S BUILD SOMETHING",
+    "accent": "INTELLIGENT.",
+    "blurb": "Have an AI idea, a role, or a project that needs engineering? My inbox is open.",
+    "cta": "Start a Conversation",
+    "resume": "Resume PDF",
+    "credit": "Designed & engineered with",
+    "wordA": "circuits",
+    "wordB": "coffee"
+  },
+  "contact": {
+    "back": "Back to portfolio",
+    "line1": "LET'S",
+    "line2": "CONNECT.",
+    "formTitle": "Drop a message",
+    "formBlurb": "Lands straight in my inbox — I usually reply within a day.",
+    "send": "Send Message",
+    "sending": "Sending…",
+    "resume": "Download Resume",
+    "inbox": "shaurya13822@gmail.com",
+    "subjects": [
+      "Full-Time Role",
+      "Internship",
+      "Freelance / Project",
+      "Collaboration",
+      "Just saying hi"
+    ]
+  }
+}
