@@ -664,7 +664,7 @@ export default function Admin() {
                 </div>
               ))}
             </div>
-            <div className="glass" style={{ padding: 18, marginTop: 14 }}>
+            <div className="glass adm-scroll" style={{ padding: 18, marginTop: 14 }}>
               <table className="adm-table">
                 <thead><tr><th>Page</th><th>Views</th></tr></thead>
                 <tbody>

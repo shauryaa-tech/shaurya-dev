@@ -1,0 +1,296 @@
+/* Small screens stay inside the viewport. Large screens fill the width. */
+
+html,
+body,
+#root {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+img,
+video,
+canvas,
+svg {
+  max-width: 100%;
+}
+
+.grid > * {
+  min-width: 0;
+}
+
+.site-header {
+  padding-top: env(safe-area-inset-top);
+}
+
+#top,
+[data-testid="contact-page"] {
+  padding-top: calc(72px + env(safe-area-inset-top));
+}
+
+.adm-page {
+  padding-top: calc(108px + env(safe-area-inset-top));
+  padding-left: max(16px, env(safe-area-inset-left));
+  padding-right: max(16px, env(safe-area-inset-right));
+  padding-bottom: max(48px, env(safe-area-inset-bottom));
+}
+
+[data-testid="hero-status-badge"] {
+  max-width: 100%;
+}
+
+[data-testid="hero-status-badge"] span {
+  white-space: normal;
+}
+
+#top h1 > span.font-mono {
+  letter-spacing: 0.08em;
+  overflow-wrap: anywhere;
+}
+
+[data-testid="about-terminal"] p,
+[data-testid="contact-info-email"] p,
+[data-testid="contact-info-linkedin"] p,
+[data-testid="footer-email"] span {
+  overflow-wrap: anywhere;
+}
+
+.adm-actions,
+.adm-tabs,
+.adm-color {
+  flex-wrap: wrap;
+}
+
+.adm-color > span {
+  width: auto !important;
+}
+
+.adm-color input:not([type="color"]) {
+  min-width: 0;
+  flex: 1 1 140px;
+}
+
+.adm-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.adm-item h3,
+.adm-meta,
+.adm-sub {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 1100px) {
+  .site-header nav {
+    gap: 1rem;
+  }
+
+  .site-header nav button {
+    letter-spacing: 0.08em;
+  }
+}
+
+@media (max-width: 900px) {
+  [data-testid="nav-resume-btn"] {
+    display: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .adm-login {
+    margin-top: 8px;
+    padding: 22px 16px;
+  }
+
+  .adm-login .adm-title {
+    font-size: clamp(1.8rem, 10vw, 2.4rem) !important;
+  }
+
+  .adm-form,
+  .adm-item,
+  .adm-stat {
+    padding: 16px;
+  }
+
+  .adm-preview {
+    height: min(72vh, 560px);
+    border-radius: 16px;
+  }
+
+  .adm-savebar {
+    justify-content: stretch;
+  }
+
+  .adm-savebar .adm-btn {
+    width: 100%;
+  }
+
+  .adm-tab,
+  .adm-btn,
+  .adm-btn-ghost,
+  .adm-btn-danger {
+    letter-spacing: 0.06em;
+    padding: 10px 12px;
+  }
+
+  .adm-bars {
+    gap: 4px;
+    padding: 12px 8px;
+    overflow-x: auto;
+  }
+
+  .adm-bar em {
+    font-size: 8px;
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+
+  section.py-24 {
+    padding-top: 4.5rem;
+    padding-bottom: 4.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-metrics {
+    gap: 8px;
+  }
+
+  .hero-metrics > div > div {
+    padding: 12px 8px;
+  }
+
+  .hero-metrics .font-display {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 1.35rem;
+    line-height: 1.1;
+  }
+
+  .hero-metrics .font-display span {
+    margin-left: 0;
+    margin-top: 4px;
+  }
+
+  [data-testid="contact-form"] {
+    padding: 1.15rem;
+  }
+
+  [data-sonner-toaster] {
+    left: 12px !important;
+    right: 12px !important;
+    width: auto !important;
+  }
+
+  [data-sonner-toast] {
+    width: 100% !important;
+  }
+
+  [data-testid="contact-info-email"] .truncate,
+  [data-testid="contact-info-phone"] .truncate,
+  [data-testid="contact-info-github"] .truncate,
+  [data-testid="contact-info-linkedin"] .truncate,
+  [data-testid^="footer-"] .truncate {
+    overflow: visible;
+    text-overflow: unset;
+    white-space: normal;
+  }
+}
+
+@media (max-width: 420px) {
+  #top h1,
+  [data-testid="contact-page"] h1 {
+    font-size: clamp(1.7rem, 8.4vw, 2.35rem);
+  }
+}
+
+@media (min-width: 1280px) {
+  .max-w-7xl {
+    max-width: 100%;
+  }
+
+  #top .max-w-xl,
+  #top .hero-metrics {
+    max-width: none;
+  }
+
+  [data-testid="hero-character"] {
+    max-width: none;
+    width: 100%;
+    justify-self: stretch;
+  }
+
+  [data-testid="hero-robot-canvas"] {
+    height: clamp(560px, 72vh, 980px);
+  }
+
+  [data-testid="contact-character"] {
+    max-width: min(100%, 720px);
+  }
+
+  footer .max-w-3xl {
+    max-width: min(100%, 72rem);
+  }
+}
+
+@media (min-width: 1600px) {
+  #projects .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  #skills .grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  #top h1,
+  [data-testid="contact-page"] h1 {
+    font-size: clamp(5.4rem, 4.4vw, 8rem);
+  }
+
+  section h2.font-display {
+    font-size: clamp(3rem, 2.2vw, 4.75rem);
+  }
+}
+
+@media (min-width: 1800px) {
+  .max-w-7xl {
+    padding-left: clamp(2rem, 3vw, 4.5rem);
+    padding-right: clamp(2rem, 3vw, 4.5rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .site-header .nav-row {
+    padding-left: 12px;
+    padding-right: 12px;
+    gap: 8px;
+  }
+
+  [data-testid="nav-contact-cta"] {
+    padding: 0.45rem 0.7rem;
+    letter-spacing: 0.06em;
+    font-size: 10px;
+  }
+
+  #top .hero-actions > button,
+  #top .hero-actions > a,
+  footer .hero-actions > a,
+  footer .hero-actions > button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  [data-testid="hero-character"] {
+    max-width: 100%;
+  }
+
+  [data-testid="hero-robot-canvas"] {
+    height: 340px;
+    border-radius: 1.4rem;
+  }
+}

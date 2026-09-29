@@ -42,11 +42,11 @@ export default function Nav() {
 
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-50 t-fast ${
+      className={`site-header fixed top-0 inset-x-0 z-50 t-fast ${
         scrolled || open ? "glass shadow-[0_8px_32px_rgba(0,0,0,0.5)]" : "bg-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-5 md:px-8 h-[72px] flex items-center justify-between">
+      <div className="nav-row max-w-7xl mx-auto px-5 md:px-8 h-[72px] flex items-center justify-between">
         <Link
           to="/"
           data-testid="nav-logo-link"

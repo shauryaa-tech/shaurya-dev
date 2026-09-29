@@ -4,7 +4,8 @@
 }
 
 .adm-wrap {
-  width: min(1100px, 100%);
+  width: 100%;
+  max-width: none;
   margin: 0 auto;
 }
 

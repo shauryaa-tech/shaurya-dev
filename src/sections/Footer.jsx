@@ -33,7 +33,7 @@ export default function Footer() {
               {footer.blurb}
             </p>
           </Reveal>
-          <Reveal delay={0.4} className="mt-9 flex flex-wrap justify-center gap-4">
+          <Reveal delay={0.4} className="hero-actions mt-9 flex flex-wrap justify-center gap-4">
             <Link
               to="/contact"
               data-testid="footer-contact-cta"

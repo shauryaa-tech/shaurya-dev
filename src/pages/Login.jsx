@@ -45,7 +45,7 @@ export default function Login() {
           </span>
         </div>
         <p className="adm-kicker">Admin</p>
-        <h1 className="adm-title" style={{ fontSize: "2.4rem" }}>SIGN IN</h1>
+        <h1 className="adm-title">SIGN IN</h1>
         <p className="adm-sub">Edit jobs, publish projects, and read site traffic.</p>
 
         <div className="adm-field" style={{ marginTop: 22 }}>

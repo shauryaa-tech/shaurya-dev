@@ -7,9 +7,9 @@ import { scrollToId } from "../components/Nav";
 import { useSiteContent } from "../site-content";
 
 const CHIP_SPOTS = [
-  { cls: "top-[12%] -left-2 md:left-[6%]", delay: "0s" },
-  { cls: "top-[30%] -right-2 md:right-[4%]", delay: "1.2s" },
-  { cls: "bottom-[24%] -left-3 md:left-[2%]", delay: "2.1s" },
+  { cls: "top-[12%] left-2 md:left-[6%]", delay: "0s" },
+  { cls: "top-[30%] right-2 md:right-[4%]", delay: "1.2s" },
+  { cls: "bottom-[24%] left-2 md:left-[2%]", delay: "2.1s" },
   { cls: "bottom-[10%] right-[10%]", delay: "0.6s" },
 ];
 
@@ -74,7 +74,7 @@ export default function Hero() {
             </p>
           </Reveal>
 
-          <Reveal delay={0.68} className="mt-9 flex flex-wrap items-center gap-4">
+          <Reveal delay={0.68} className="hero-actions mt-9 flex flex-wrap items-center gap-4">
             <button
               data-testid="hero-explore-btn"
               onClick={() => scrollToId("projects")}
@@ -92,7 +92,7 @@ export default function Hero() {
             </a>
           </Reveal>
 
-          <Reveal delay={0.8} className="mt-12 grid grid-cols-3 gap-3 max-w-xl">
+          <Reveal delay={0.8} className="hero-metrics mt-12 grid grid-cols-3 gap-3 max-w-xl">
             {site.metrics.map((m) => (
               <div
                 key={m.label}
