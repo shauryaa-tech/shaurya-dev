@@ -4,6 +4,7 @@ import Lenis from "lenis";
 import "lenis/dist/lenis.css";
 import { Toaster } from "sonner";
 import Nav from "./components/Nav";
+import Seo from "./components/Seo";
 import Cursor from "./components/Cursor";
 import Home from "./pages/Home";
 import Contact from "./pages/Contact";
@@ -82,6 +83,7 @@ export default function App() {
     <ErrorBoundary>
       <BrowserRouter>
         <SiteContentProvider>
+        <Seo />
         <ScrollManager />
         <Tracker />
         <Cursor />

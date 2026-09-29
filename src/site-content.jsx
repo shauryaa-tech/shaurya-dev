@@ -26,8 +26,6 @@ export function SiteContentProvider({ children }) {
 
   useEffect(() => {
     applyTheme(site.theme);
-    const name = site.profile?.name;
-    if (name) document.title = `${name} - AI/ML Engineer`;
   }, [site]);
 
   return (

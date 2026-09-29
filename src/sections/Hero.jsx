@@ -16,6 +16,7 @@ const CHIP_SPOTS = [
 export default function Hero() {
   const { site } = useSiteContent();
   const hero = site.hero;
+  const profile = site.profile;
   const chips = (hero.chips || []).slice(0, 4).map((text, index) => ({ text, ...CHIP_SPOTS[index] }));
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
@@ -55,6 +56,9 @@ export default function Hero() {
           </Reveal>
 
           <h1 className="font-display font-extrabold text-white leading-[0.95] tracking-tight text-[clamp(2.55rem,10.5vw,5.4rem)]">
+            <span className="block font-mono text-[11px] font-medium uppercase tracking-[0.28em] text-slate-400 mb-4">
+              {profile.name} · {profile.location}
+            </span>
             <KineticLine delay={0.12}>{hero.line1}</KineticLine>
             <KineticLine delay={0.24}>
               <span className="text-stroke">{hero.line2}</span>
@@ -115,11 +119,12 @@ export default function Hero() {
           <div className="absolute inset-6 rounded-full bg-neon/12 blur-[80px]" />
           <div className="absolute inset-6 rounded-full bg-viol/12 blur-[100px]" />
           <div
+            aria-label={`${profile.name}, ${profile.role}`}
             className="relative z-10 h-[400px] sm:h-[500px] lg:h-[600px] rounded-[2.2rem] overflow-hidden border border-white/10 shadow-[0_0_90px_rgba(0,240,255,0.16)] bg-ink/40"
             data-testid="hero-robot-canvas"
           >
             {hero.visual === "image" && hero.image ? (
-              <img src={hero.image} alt="" className="w-full h-full object-contain" />
+              <img src={hero.image} alt={`${profile.name}, ${profile.role}`} className="w-full h-full object-contain" />
             ) : (
               <Robot3D src={hero.model || "/models/robot.glb"} />
             )}
