@@ -14,6 +14,8 @@ export default defineConfig(({ mode }) => {
         inbox: env.CONTACT_TO || "shaurya13822@gmail.com",
         smtpUser: env.SMTP_USER || "",
         smtpPass: String(env.SMTP_PASS || "").trim().replace(/^["']|["']$/g, "").replace(/\s/g, ""),
+        mailHook: env.MAIL_HOOK || "",
+        mailSecret: env.MAIL_SECRET || "",
       }),
     ],
     resolve: {

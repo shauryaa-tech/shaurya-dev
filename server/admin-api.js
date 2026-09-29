@@ -329,7 +329,11 @@ function validEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
 
-async function deliverContact({ smtpUser, smtpPass, to, mail, replyTo, fields }) {
+async function deliverContact({ smtpUser, smtpPass, to, mail, replyTo, mailHook, mailSecret }) {
+  if (mailHook && mailSecret) {
+    const hooked = await deliverViaHook({ mailHook, mailSecret, to, mail, replyTo });
+    if (hooked.emailed) return hooked;
+  }
   if (smtpUser && smtpPass) {
     try {
       const transport = nodemailer.createTransport({
@@ -354,43 +358,32 @@ async function deliverContact({ smtpUser, smtpPass, to, mail, replyTo, fields })
       console.error("gmail smtp:", err?.message || err);
     }
   }
-  return deliverOverHttps({ to, mail, replyTo, fields });
+  return { emailed: false, note: mailHook ? "hook failed" : "mail hook missing" };
 }
 
-async function deliverOverHttps({ to, mail, replyTo, fields }) {
-  const site = "http://localhost:5173";
+async function deliverViaHook({ mailHook, mailSecret, to, mail, replyTo }) {
   try {
-    const response = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(to)}`, {
+    const response = await fetch(mailHook, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Origin: site,
-        Referer: `${site}/contact`,
-        "User-Agent": "Mozilla/5.0",
-      },
+      redirect: "manual",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        _subject: mail.subject,
-        _template: "box",
-        _captcha: "false",
-        _replyto: replyTo,
-        From: fields.name,
-        Email: fields.email,
-        Topic: fields.subject,
-        Message: fields.message,
-        Portfolio: "Shaurya Pratap Singh · AI/ML Engineer",
+        secret: mailSecret,
+        to,
+        subject: mail.subject,
+        text: mail.text,
+        html: mail.html,
+        replyTo,
       }),
       signal: AbortSignal.timeout(20000),
     });
-    const data = await response.json().catch(() => ({}));
-    const note = String(data.message || "");
-    const ok = response.ok && String(data.success) === "true";
-    if (!ok) console.error("contact https:", note || response.status);
-    return { emailed: ok, note: note || `mail service ${response.status}` };
+    const location = response.headers.get("location") || "";
+    const ok = response.status === 200 || (response.status === 302 && /script\.google/.test(location));
+    if (!ok) console.error("gmail hook:", response.status, location);
+    return { emailed: ok, note: ok ? "hook" : `hook ${response.status}` };
   } catch (err) {
-    const note = err?.message || "mail service failed";
-    console.error("contact https:", note);
-    return { emailed: false, note };
+    console.error("gmail hook:", err?.message || err);
+    return { emailed: false, note: err?.message || "hook failed" };
   }
 }
 
@@ -400,6 +393,8 @@ export function adminApiPlugin({
   inbox = "shaurya13822@gmail.com",
   smtpUser = "",
   smtpPass = "",
+  mailHook = "",
+  mailSecret = "",
 } = {}) {
   const tokens = new Set();
   const contactHits = new Map();
@@ -508,10 +503,11 @@ export function adminApiPlugin({
               delivery = await deliverContact({
                 smtpUser,
                 smtpPass,
+                mailHook,
+                mailSecret,
                 to: currentInbox(),
                 mail,
                 replyTo: email,
-                fields: { name, email, subject, message },
               });
             } catch (err) {
               console.error("contact mail:", err?.message || err);
