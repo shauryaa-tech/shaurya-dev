@@ -329,7 +329,7 @@ function validEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
 
-async function deliverContact({ smtpUser, smtpPass, to, mail, replyTo, fields, origin }) {
+async function deliverContact({ smtpUser, smtpPass, to, mail, replyTo, fields }) {
   if (smtpUser && smtpPass) {
     try {
       const transport = nodemailer.createTransport({
@@ -337,9 +337,9 @@ async function deliverContact({ smtpUser, smtpPass, to, mail, replyTo, fields, o
         port: 465,
         secure: true,
         auth: { user: smtpUser, pass: smtpPass },
-        connectionTimeout: 8000,
-        greetingTimeout: 8000,
-        socketTimeout: 12000,
+        connectionTimeout: 5000,
+        greetingTimeout: 5000,
+        socketTimeout: 8000,
       });
       await transport.sendMail({
         from: { name: "Shaurya.dev", address: smtpUser },
@@ -354,17 +354,18 @@ async function deliverContact({ smtpUser, smtpPass, to, mail, replyTo, fields, o
       console.error("gmail smtp:", err?.message || err);
     }
   }
-  return deliverOverHttps({ to, mail, replyTo, fields, origin });
+  return deliverOverHttps({ to, mail, replyTo, fields });
 }
 
-async function deliverOverHttps({ to, mail, replyTo, fields, origin }) {
+async function deliverOverHttps({ to, mail, replyTo, fields }) {
+  const site = "http://localhost:5173";
   const response = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(to)}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
-      Origin: origin,
-      Referer: `${origin}/contact`,
+      Origin: site,
+      Referer: `${site}/contact`,
     },
     body: JSON.stringify({
       _subject: mail.subject,
@@ -496,7 +497,6 @@ export function adminApiPlugin({
               emailed: false,
             };
             let delivery = { emailed: false, note: "" };
-            const origin = req.headers.origin || "https://shaurya-dev.onrender.com";
             try {
               delivery = await deliverContact({
                 smtpUser,
@@ -505,7 +505,6 @@ export function adminApiPlugin({
                 mail,
                 replyTo: email,
                 fields: { name, email, subject, message },
-                origin,
               });
             } catch (err) {
               console.error("contact mail:", err?.message || err);
