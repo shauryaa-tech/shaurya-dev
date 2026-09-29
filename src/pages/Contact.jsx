@@ -43,6 +43,7 @@ export default function Contact() {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        signal: AbortSignal.timeout(25000),
         body: JSON.stringify({
           name: form.name,
           email: form.email,

@@ -329,23 +329,61 @@ function validEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
 
-async function deliverContact({ smtpUser, smtpPass, to, mail, replyTo }) {
-  if (!smtpUser || !smtpPass) return { emailed: false, note: "smtp missing" };
-  const transport = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
-    auth: { user: smtpUser, pass: smtpPass },
+async function deliverContact({ smtpUser, smtpPass, to, mail, replyTo, fields, origin }) {
+  if (smtpUser && smtpPass) {
+    try {
+      const transport = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 465,
+        secure: true,
+        auth: { user: smtpUser, pass: smtpPass },
+        connectionTimeout: 8000,
+        greetingTimeout: 8000,
+        socketTimeout: 12000,
+      });
+      await transport.sendMail({
+        from: { name: "Shaurya.dev", address: smtpUser },
+        to,
+        replyTo,
+        subject: mail.subject,
+        text: mail.text,
+        html: mail.html,
+      });
+      return { emailed: true, note: "gmail" };
+    } catch (err) {
+      console.error("gmail smtp:", err?.message || err);
+    }
+  }
+  return deliverOverHttps({ to, mail, replyTo, fields, origin });
+}
+
+async function deliverOverHttps({ to, mail, replyTo, fields, origin }) {
+  const response = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(to)}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Origin: origin,
+      Referer: `${origin}/contact`,
+    },
+    body: JSON.stringify({
+      _subject: mail.subject,
+      _template: "box",
+      _captcha: "false",
+      _replyto: replyTo,
+      From: fields.name,
+      Email: fields.email,
+      Topic: fields.subject,
+      Message: fields.message,
+      Portfolio: "Shaurya Pratap Singh · AI/ML Engineer",
+    }),
+    signal: AbortSignal.timeout(12000),
   });
-  await transport.sendMail({
-    from: { name: "Shaurya.dev", address: smtpUser },
-    to,
-    replyTo,
-    subject: mail.subject,
-    text: mail.text,
-    html: mail.html,
-  });
-  return { emailed: true, note: "" };
+  const data = await response.json().catch(() => ({}));
+  const note = String(data.message || "");
+  const ok = response.ok && String(data.success) !== "false" && !/activat|confirm/i.test(note);
+  if (!ok) console.error("contact https:", note || response.status);
+  return { emailed: ok, note };
 }
 
 export function adminApiPlugin({
@@ -458,6 +496,7 @@ export function adminApiPlugin({
               emailed: false,
             };
             let delivery = { emailed: false, note: "" };
+            const origin = req.headers.origin || "https://shaurya-dev.onrender.com";
             try {
               delivery = await deliverContact({
                 smtpUser,
@@ -465,6 +504,8 @@ export function adminApiPlugin({
                 to: currentInbox(),
                 mail,
                 replyTo: email,
+                fields: { name, email, subject, message },
+                origin,
               });
             } catch (err) {
               console.error("contact mail:", err?.message || err);
