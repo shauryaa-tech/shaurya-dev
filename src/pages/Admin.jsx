@@ -156,12 +156,16 @@ export default function Admin() {
       }
       setDraft((prev) => {
         const next = structuredClone(prev);
+        if (kind === "resume") {
+          next.profile.resume = data.url;
+          return next;
+        }
         next.hero.visual = kind === "image" ? "image" : "model";
         if (kind === "image") next.hero.image = data.url;
         else next.hero.model = data.url;
         return next;
       });
-      toast.success("File ready — hit Publish to site");
+      toast.success(kind === "resume" ? "Resume updated on the site" : "File ready — hit Publish to site");
     } catch {
       toast.error("Upload failed");
     } finally {
@@ -288,6 +292,27 @@ export default function Admin() {
               <Field label="Phone" value={draft.profile.phone} onChange={(phone) => patch("profile.phone", phone)} />
               <Field label="Location" value={draft.profile.location} onChange={(location) => patch("profile.location", location)} />
               <Field label="Resume path" value={draft.profile.resume} onChange={(resume) => patch("profile.resume", resume)} />
+              <div className="adm-field">
+                <label>Resume PDF</label>
+                <div className="adm-actions">
+                  <label className="adm-btn" style={{ width: "fit-content" }}>
+                    {uploading ? "Uploading…" : "Replace resume"}
+                    <input
+                      type="file"
+                      accept="application/pdf,.pdf"
+                      hidden
+                      disabled={uploading}
+                      data-testid="admin-resume-file"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        e.target.value = "";
+                        if (file) uploadHero(file, "resume");
+                      }}
+                    />
+                  </label>
+                  <a className="adm-btn-ghost" style={{ textDecoration: "none" }} href={draft.profile.resume} target="_blank" rel="noreferrer">View resume</a>
+                </div>
+              </div>
               <Field label="GitHub URL" value={draft.profile.github} onChange={(github) => patch("profile.github", github)} />
               <Field label="GitHub label" value={draft.profile.githubLabel} onChange={(githubLabel) => patch("profile.githubLabel", githubLabel)} />
               <Field label="LinkedIn URL" value={draft.profile.linkedin} onChange={(linkedin) => patch("profile.linkedin", linkedin)} />

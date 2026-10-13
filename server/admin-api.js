@@ -46,6 +46,7 @@ function sniffMedia(buf) {
   if (buf.length > 8 && buf[0] === 0x89 && buf[1] === 0x50 && buf[2] === 0x4e && buf[3] === 0x47) return { ext: "png", kind: "image" };
   if (buf.length > 3 && buf[0] === 0xff && buf[1] === 0xd8) return { ext: "jpg", kind: "image" };
   if (buf.length > 12 && buf.slice(0, 4).toString() === "RIFF" && buf.slice(8, 12).toString() === "WEBP") return { ext: "webp", kind: "image" };
+  if (buf.length > 5 && buf.slice(0, 1024).toString("latin1").includes("%PDF-")) return { ext: "pdf", kind: "resume" };
   return null;
 }
 
@@ -428,13 +429,27 @@ export function adminApiPlugin({
             const sniffed = sniffMedia(file);
             const asked = new URL(req.url, "http://localhost").searchParams.get("kind");
             if (!sniffed || sniffed.kind !== asked) {
-              return send(res, 400, { detail: "Upload a .glb model or a PNG, JPG, or WEBP image" });
+              const detail = asked === "resume"
+                ? "Upload a PDF resume"
+                : "Upload a .glb model or a PNG, JPG, or WEBP image";
+              return send(res, 400, { detail });
             }
             const uploads = path.resolve("public/uploads");
             fs.mkdirSync(uploads, { recursive: true });
-            const filename = `hero-${Date.now()}.${sniffed.ext}`;
+            if (asked === "resume") {
+              for (const name of fs.readdirSync(uploads)) {
+                if (name.startsWith("resume-") && name.endsWith(".pdf")) fs.unlinkSync(path.join(uploads, name));
+              }
+            }
+            const filename = asked === "resume" ? `resume-${Date.now()}.pdf` : `hero-${Date.now()}.${sniffed.ext}`;
             fs.writeFileSync(path.join(uploads, filename), file);
-            return send(res, 200, { url: `/uploads/${filename}` });
+            const url = `/uploads/${filename}`;
+            if (asked === "resume") {
+              const content = readJson(contentPath, {});
+              content.profile = { ...(content.profile || {}), resume: url };
+              writeJson(contentPath, content);
+            }
+            return send(res, 200, { url });
           }
 
           if (req.method === "POST" && pathname === "/api/login") {
