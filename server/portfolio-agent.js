@@ -66,11 +66,11 @@ export function answerFromPortfolio(site, question) {
   }
 
   if (has(q, ["hello", "hey", "namaste", "good morning", "good evening"]) || q === "hi" || q.startsWith("hi ")) {
-    return `Hey! I'm ${first}'s portfolio agent. I can walk you through his AI/ML work, projects, experience, and how to reach him. What would you like to know?`;
+    return `Hey! I'm Eva, ${first}'s AI assistant. I can walk you through his AI/ML work, projects, experience, and how to reach him. What would you like to know?`;
   }
 
-  if (has(q, ["who are you", "what are you", "your name", "agent"])) {
-    return `I'm the on-site AI guide for ${name}'s portfolio. I answer from his real profile, projects, and experience — not random web guesses.`;
+  if (has(q, ["who are you", "what are you", "your name", "agent", "eva"])) {
+    return `I'm Eva — ${name}'s AI assistant on this portfolio. I answer from his real profile, projects, and experience — not random web guesses.`;
   }
 
   if (has(q, ["contact", "email", "phone", "reach", "hire", "linkedin", "github", "resume", "cv"])) {
@@ -184,7 +184,7 @@ export async function answerWithGemini(site, question, apiKey) {
             parts: [
               {
                 text: [
-                  "You are Shaurya's portfolio AI agent on shaurya-dev.onrender.com.",
+                  "You are Eva, Shaurya's AI assistant on shaurya-dev.onrender.com.",
                   "Answer ONLY using the portfolio brief below. Be warm, clear, and specific.",
                   "If something is missing from the brief, say you don't have that detail and point them to Contact.",
                   "Keep answers under 180 words unless listing projects/skills.",

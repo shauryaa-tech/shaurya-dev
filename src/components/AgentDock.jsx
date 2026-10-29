@@ -1,11 +1,32 @@
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Send, Sparkles, Bot, X } from "lucide-react";
+import { Send, Sparkles, X } from "lucide-react";
 import { AGENT_PROMPTS, askPortfolioAgent } from "../lib/portfolioAgent";
 import { useSiteContent } from "../site-content";
 
 const POS_KEY = "sps-agent-pos";
 const SIZE = 58;
+
+function EvaIcon({ size = 28 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 48 48" fill="none" aria-hidden="true">
+      <circle cx="24" cy="24" r="22" fill="url(#evaGlow)" opacity="0.35" />
+      <rect x="8" y="8" width="32" height="32" rx="12" fill="#031018" stroke="currentColor" strokeWidth="1.5" />
+      <path
+        d="M18 30V18h7.2c3.1 0 5.1 1.8 5.1 4.5 0 2.7-2 4.5-5.1 4.5H21.2V30H18zm3.2-5.6h3.7c1.5 0 2.4-.8 2.4-2s-.9-2-2.4-2h-3.7v4z"
+        fill="currentColor"
+      />
+      <path d="M34 17.5c1.4 1.5 2.2 3.4 2.2 5.5S35.4 27 34 28.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" opacity="0.85" />
+      <path d="M37.2 14.8c2.1 2.2 3.3 5 3.3 8.2s-1.2 6-3.3 8.2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" opacity="0.45" />
+      <defs>
+        <radialGradient id="evaGlow" cx="50%" cy="45%" r="50%">
+          <stop offset="0%" stopColor="#00f0ff" />
+          <stop offset="100%" stopColor="#00f0ff" stopOpacity="0" />
+        </radialGradient>
+      </defs>
+    </svg>
+  );
+}
 
 function loadPos() {
   try {
@@ -40,7 +61,7 @@ export default function AgentDock() {
   const [messages, setMessages] = useState([
     {
       role: "agent",
-      text: `Hi — I'm ${first}'s AI portfolio agent. Ask about his projects, skills, experience, or how to contact him.`,
+      text: `Hi — I'm Eva, ${first}'s AI assistant. Ask about his projects, skills, experience, or how to contact him.`,
     },
   ]);
   const [input, setInput] = useState("");
@@ -129,18 +150,18 @@ export default function AgentDock() {
         >
           <div className="flex items-center gap-3 px-3.5 py-3 border-b border-white/10 bg-white/5">
             <span className="w-9 h-9 rounded-xl bg-neon/15 border border-neon/30 flex items-center justify-center text-neon">
-              <Bot size={18} />
+              <EvaIcon size={22} />
             </span>
             <div className="min-w-0 flex-1">
               <p className="font-display font-bold text-white text-sm flex items-center gap-1.5">
-                {first} AI Agent
+                Eva
                 <Sparkles size={13} className="text-viol" />
               </p>
-              <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-emerald-400">Online</p>
+              <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-emerald-400">AI assistant · online</p>
             </div>
             <button
               type="button"
-              aria-label="Close agent"
+              aria-label="Close Eva"
               className="rounded-lg border border-white/10 p-1.5 text-slate-300 hover:text-neon t-fast"
               onClick={() => setOpen(false)}
             >
@@ -216,8 +237,9 @@ export default function AgentDock() {
       <button
         type="button"
         data-testid="agent-launcher"
-        aria-label="Open Shaurya AI agent"
-        className="fixed z-[95] w-[58px] h-[58px] rounded-full bg-neon text-ink border border-white/20 shadow-[0_0_28px_rgba(0,240,255,0.45)] flex items-center justify-center cursor-grab active:cursor-grabbing touch-none select-none"
+        aria-label="Open Eva"
+        title="Eva"
+        className="fixed z-[95] w-[58px] h-[58px] rounded-full bg-gradient-to-br from-neon to-[#6ee7ff] text-ink border border-white/25 shadow-[0_0_32px_rgba(0,240,255,0.55)] flex items-center justify-center cursor-grab active:cursor-grabbing touch-none select-none overflow-hidden"
         style={{ left: pos.x, top: pos.y }}
         onPointerDown={(e) => {
           drag.current = {
@@ -235,7 +257,8 @@ export default function AgentDock() {
           setOpen((value) => !value);
         }}
       >
-        <Bot size={24} />
+        <span className="absolute inset-0 bg-[radial-gradient(circle_at_30%_25%,rgba(255,255,255,0.45),transparent_55%)] pointer-events-none" />
+        <EvaIcon size={30} />
       </button>
     </div>
   );
