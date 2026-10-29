@@ -21,6 +21,7 @@ export default function Nav() {
   const nav = site.nav;
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState("");
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
@@ -31,14 +32,42 @@ export default function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    if (pathname !== "/") {
+      setActive("");
+      return;
+    }
+    const ids = nav.links.map((l) => l.id);
+    const sections = ids.map((id) => document.getElementById(id)).filter(Boolean);
+    if (!sections.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (visible[0]?.target?.id) setActive(visible[0].target.id);
+      },
+      { rootMargin: "-28% 0px -55% 0px", threshold: [0.1, 0.25, 0.5] },
+    );
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, [pathname, nav.links]);
+
   const go = (id) => {
     setOpen(false);
+    setActive(id);
     if (pathname !== "/") {
       navigate("/", { state: { scrollTo: id } });
     } else {
       scrollToId(id);
     }
   };
+
+  const linkClass = (id, mobile = false) =>
+    `${mobile ? "font-mono text-sm text-left" : "font-mono text-xs"} uppercase tracking-[0.2em] t-fast ${
+      active === id ? "text-neon" : mobile ? "text-slate-200 hover:text-neon" : "text-slate-400 hover:text-neon"
+    }`;
 
   return (
     <header
@@ -66,7 +95,8 @@ export default function Nav() {
               key={l.id}
               data-testid={`nav-link-${l.id}`}
               onClick={() => go(l.id)}
-              className="font-mono text-xs uppercase tracking-[0.2em] text-slate-400 hover:text-neon t-fast"
+              aria-current={active === l.id ? "true" : undefined}
+              className={linkClass(l.id)}
             >
               {l.label}
             </button>
@@ -107,7 +137,8 @@ export default function Nav() {
               key={l.id}
               data-testid={`nav-mobile-link-${l.id}`}
               onClick={() => go(l.id)}
-              className="font-mono text-sm uppercase tracking-[0.2em] text-slate-200 hover:text-neon t-fast text-left"
+              aria-current={active === l.id ? "true" : undefined}
+              className={linkClass(l.id, true)}
             >
               {l.label}
             </button>
