@@ -2139,6 +2139,85 @@ body::after {
   animation: floaty 6s ease-in-out infinite;
 }
 
+.hero-orbit {
+  animation: hero-spin 28s linear infinite;
+}
+
+.hero-orbit-slow {
+  animation-duration: 48s;
+  animation-direction: reverse;
+}
+
+@keyframes hero-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.hero-stage-scan {
+  top: -30%;
+  animation: hero-scan 5.5s ease-in-out infinite;
+}
+
+@keyframes hero-scan {
+  0%,
+  100% {
+    top: -25%;
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.9;
+  }
+  50% {
+    top: 95%;
+    opacity: 0.35;
+  }
+  85% {
+    opacity: 0;
+  }
+}
+
+.hero-corner {
+  position: absolute;
+  z-index: 2;
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+  border-color: color-mix(in srgb, var(--cyan, #00f0ff) 70%, transparent);
+}
+
+.hero-corner-tl {
+  top: 14px;
+  left: 14px;
+  border-top: 2px solid;
+  border-left: 2px solid;
+}
+
+.hero-corner-tr {
+  top: 14px;
+  right: 14px;
+  border-top: 2px solid;
+  border-right: 2px solid;
+}
+
+.hero-corner-bl {
+  bottom: 14px;
+  left: 14px;
+  border-bottom: 2px solid;
+  border-left: 2px solid;
+}
+
+.hero-corner-br {
+  bottom: 14px;
+  right: 14px;
+  border-bottom: 2px solid;
+  border-right: 2px solid;
+}
+
+.hero-hint-pulse {
+  animation: pulse-dot 2s ease-out infinite;
+}
+
 @keyframes pulse-dot {
   0%,
   100% {

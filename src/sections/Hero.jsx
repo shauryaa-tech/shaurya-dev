@@ -7,10 +7,10 @@ import { scrollToId } from "../components/Nav";
 import { useSiteContent } from "../site-content";
 
 const CHIP_SPOTS = [
-  { cls: "top-[12%] left-2 md:left-[6%]", delay: "0s" },
-  { cls: "top-[30%] right-2 md:right-[4%]", delay: "1.2s" },
-  { cls: "bottom-[24%] left-2 md:left-[2%]", delay: "2.1s" },
-  { cls: "bottom-[10%] right-[10%]", delay: "0.6s" },
+  { cls: "top-[10%] left-1 md:left-[2%]", delay: "0s", tone: "neon" },
+  { cls: "top-[26%] right-0 md:right-[1%]", delay: "1.1s", tone: "viol" },
+  { cls: "bottom-[28%] left-0 md:left-[0%]", delay: "2s", tone: "viol" },
+  { cls: "bottom-[12%] right-1 md:right-[6%]", delay: "0.5s", tone: "neon" },
 ];
 
 export default function Hero() {
@@ -116,34 +116,55 @@ export default function Hero() {
           className="relative justify-self-center w-full max-w-[560px]"
           data-testid="hero-character"
         >
-          <div className="absolute inset-6 rounded-full bg-neon/12 blur-[80px]" />
-          <div className="absolute inset-6 rounded-full bg-viol/12 blur-[100px]" />
-          <div
-            aria-label={`${profile.name}, ${profile.role}`}
-            className="relative z-10 h-[400px] sm:h-[500px] lg:h-[600px] rounded-[2.2rem] overflow-hidden border border-white/10 shadow-[0_0_90px_rgba(0,240,255,0.16)] bg-ink/40"
-            data-testid="hero-robot-canvas"
-          >
-            {hero.visual === "image" && hero.image ? (
-              <img src={hero.image} alt={`${profile.name}, ${profile.role}`} className="w-full h-full object-contain" />
-            ) : (
-              <Robot3D src={hero.model || "/models/robot.glb"} />
-            )}
+          <div className="hero-stage-glow absolute inset-[8%] rounded-full bg-neon/15 blur-[90px]" />
+          <div className="absolute inset-[12%] rounded-full bg-viol/15 blur-[110px]" />
+          <div className="hero-orbit absolute inset-[6%] rounded-full border border-neon/15 pointer-events-none" />
+          <div className="hero-orbit hero-orbit-slow absolute inset-[14%] rounded-full border border-dashed border-viol/20 pointer-events-none" />
+
+          <div className="hero-stage relative z-10 p-[1px] rounded-[2.2rem] bg-gradient-to-br from-neon/50 via-white/10 to-viol/45 shadow-[0_0_80px_rgba(0,240,255,0.18)]">
+            <div
+              aria-label={`${profile.name}, ${profile.role}`}
+              className="relative h-[400px] sm:h-[500px] lg:h-[600px] rounded-[2.15rem] overflow-hidden bg-ink/70"
+              data-testid="hero-robot-canvas"
+            >
+              <div className="hero-stage-scan pointer-events-none absolute inset-x-0 h-24 bg-gradient-to-b from-transparent via-neon/10 to-transparent z-[1]" />
+              <div className="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(circle_at_50%_40%,transparent_35%,rgba(3,7,18,0.55)_100%)]" />
+              <span className="hero-corner hero-corner-tl" />
+              <span className="hero-corner hero-corner-tr" />
+              <span className="hero-corner hero-corner-bl" />
+              <span className="hero-corner hero-corner-br" />
+              {hero.visual === "image" && hero.image ? (
+                <img src={hero.image} alt={`${profile.name}, ${profile.role}`} className="relative z-0 w-full h-full object-contain" />
+              ) : (
+                <Robot3D src={hero.model || "/models/robot.glb"} />
+              )}
+            </div>
           </div>
+
           {hero.visual !== "image" && (
-          <div
-            className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 glass rounded-full px-4 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] text-neon pointer-events-none"
-            data-testid="hero-rotate-hint"
-          >
-            {hero.rotate}
-          </div>
+            <div
+              className="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 inline-flex items-center gap-2 rounded-full border border-neon/30 bg-ink/80 backdrop-blur-md px-4 py-2 font-mono text-[10px] uppercase tracking-[0.22em] text-neon shadow-[0_0_24px_rgba(0,240,255,0.25)] pointer-events-none"
+              data-testid="hero-rotate-hint"
+            >
+              <span className="hero-hint-pulse w-1.5 h-1.5 rounded-full bg-neon" />
+              {hero.rotate}
+            </div>
           )}
+
           {chips.map((c) => (
             <div
               key={c.text}
               className={`absolute z-20 floaty ${c.cls}`}
               style={{ animationDelay: c.delay }}
             >
-              <span className="glass rounded-full px-4 py-2 font-mono text-xs text-neon shadow-[0_0_20px_rgba(0,240,255,0.25)]">
+              <span
+                className={`inline-flex items-center gap-2 rounded-full border px-3.5 py-2 font-mono text-xs backdrop-blur-md shadow-[0_8px_28px_rgba(0,0,0,0.35)] ${
+                  c.tone === "viol"
+                    ? "border-viol/40 bg-viol/10 text-viol shadow-[0_0_22px_rgba(168,85,247,0.28)]"
+                    : "border-neon/40 bg-neon/10 text-neon shadow-[0_0_22px_rgba(0,240,255,0.28)]"
+                }`}
+              >
+                <i className={`w-1.5 h-1.5 rounded-full ${c.tone === "viol" ? "bg-viol" : "bg-neon"}`} />
                 {c.text}
               </span>
             </div>
