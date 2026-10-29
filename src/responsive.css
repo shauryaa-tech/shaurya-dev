@@ -24,7 +24,14 @@ svg {
 
 #top,
 [data-testid="contact-page"] {
-  padding-top: calc(72px + env(safe-area-inset-top));
+  padding-top: calc(64px + env(safe-area-inset-top));
+}
+
+@media (min-width: 768px) {
+  #top,
+  [data-testid="contact-page"] {
+    padding-top: calc(72px + env(safe-area-inset-top));
+  }
 }
 
 .adm-page {
@@ -90,11 +97,6 @@ svg {
   }
 }
 
-@media (max-width: 900px) {
-  [data-testid="nav-resume-btn"] {
-    display: none;
-  }
-}
 
 @media (max-width: 720px) {
   .adm-login {
@@ -269,12 +271,6 @@ svg {
     padding-left: 12px;
     padding-right: 12px;
     gap: 8px;
-  }
-
-  [data-testid="nav-contact-cta"] {
-    padding: 0.45rem 0.7rem;
-    letter-spacing: 0.06em;
-    font-size: 10px;
   }
 
   #top .hero-actions > button,

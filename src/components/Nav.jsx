@@ -33,6 +33,19 @@ export default function Nav() {
   }, []);
 
   useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
+
+  useEffect(() => {
     if (pathname !== "/") {
       setActive("");
       return;
@@ -65,7 +78,7 @@ export default function Nav() {
   };
 
   const linkClass = (id, mobile = false) =>
-    `${mobile ? "font-mono text-sm text-left" : "font-mono text-xs"} uppercase tracking-[0.2em] t-fast ${
+    `${mobile ? "font-mono text-sm text-left w-full py-3" : "font-mono text-xs"} uppercase tracking-[0.2em] t-fast ${
       active === id ? "text-neon" : mobile ? "text-slate-200 hover:text-neon" : "text-slate-400 hover:text-neon"
     }`;
 
@@ -75,16 +88,17 @@ export default function Nav() {
         scrolled || open ? "glass shadow-[0_8px_32px_rgba(0,0,0,0.5)]" : "bg-transparent"
       }`}
     >
-      <div className="nav-row max-w-7xl mx-auto px-5 md:px-8 h-[72px] flex items-center justify-between">
+      <div className="nav-row max-w-7xl mx-auto px-4 sm:px-5 md:px-8 h-[64px] md:h-[72px] flex items-center justify-between gap-2">
         <Link
           to="/"
           data-testid="nav-logo-link"
-          className="flex items-center gap-3 group"
+          className="flex items-center gap-2.5 group min-w-0"
+          onClick={() => setOpen(false)}
         >
-          <span className="t-fast group-hover:rotate-[8deg]">
-            <Logo />
+          <span className="t-fast group-hover:rotate-[8deg] shrink-0">
+            <Logo size={34} />
           </span>
-          <span className="font-display font-bold text-white text-sm tracking-wide hidden sm:block">
+          <span className="font-display font-bold text-white text-sm tracking-wide truncate">
             {profile.brand}<span className="text-neon">{profile.brandAccent}</span>
           </span>
         </Link>
@@ -103,27 +117,28 @@ export default function Nav() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           <a
             href={profile.resume}
             download="Shaurya_Pratap_Singh_Resume.pdf"
             data-testid="nav-resume-btn"
-            className="hidden sm:inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 font-mono text-xs uppercase tracking-[0.15em] text-slate-200 hover:border-neon/60 hover:text-neon t-fast"
+            className="hidden md:inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 font-mono text-xs uppercase tracking-[0.15em] text-slate-200 hover:border-neon/60 hover:text-neon t-fast"
           >
             <Download size={14} /> {nav.resumeLabel}
           </a>
           <Link
             to="/contact"
             data-testid="nav-contact-cta"
-            className="inline-flex items-center rounded-full bg-neon px-5 py-2 font-mono text-xs font-bold uppercase tracking-[0.15em] text-ink hover:shadow-[0_0_28px_rgba(0,240,255,0.45)] t-fast"
+            className="hidden md:inline-flex items-center rounded-full bg-neon px-5 py-2 font-mono text-xs font-bold uppercase tracking-[0.15em] text-ink hover:shadow-[0_0_28px_rgba(0,240,255,0.45)] t-fast"
           >
             {nav.talkLabel}
           </Link>
           <button
             data-testid="nav-mobile-toggle"
-            className="md:hidden text-white p-2"
+            className="md:hidden text-white p-2 -mr-1 rounded-xl border border-white/10 bg-white/5"
             onClick={() => setOpen(!open)}
             aria-label="Toggle menu"
+            aria-expanded={open}
           >
             {open ? <X size={22} /> : <Menu size={22} />}
           </button>
@@ -131,26 +146,42 @@ export default function Nav() {
       </div>
 
       {open && (
-        <div className="md:hidden glass border-t border-white/10 px-5 py-4 flex flex-col gap-4" data-testid="nav-mobile-panel">
-          {nav.links.map((l) => (
-            <button
-              key={l.id}
-              data-testid={`nav-mobile-link-${l.id}`}
-              onClick={() => go(l.id)}
-              aria-current={active === l.id ? "true" : undefined}
-              className={linkClass(l.id, true)}
+        <div
+          className="md:hidden border-t border-white/10 bg-ink/95 backdrop-blur-xl px-4 pb-[max(20px,env(safe-area-inset-bottom))] pt-2 max-h-[calc(100dvh-64px-env(safe-area-inset-top))] overflow-y-auto"
+          data-testid="nav-mobile-panel"
+        >
+          <div className="flex flex-col">
+            {nav.links.map((l) => (
+              <button
+                key={l.id}
+                data-testid={`nav-mobile-link-${l.id}`}
+                onClick={() => go(l.id)}
+                aria-current={active === l.id ? "true" : undefined}
+                className={linkClass(l.id, true)}
+              >
+                {l.label}
+              </button>
+            ))}
+          </div>
+          <div className="mt-3 pt-4 border-t border-white/10 flex flex-col gap-3">
+            <a
+              href={profile.resume}
+              download="Shaurya_Pratap_Singh_Resume.pdf"
+              data-testid="nav-mobile-resume-btn"
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 px-4 py-3 font-mono text-xs uppercase tracking-[0.15em] text-slate-200"
+              onClick={() => setOpen(false)}
             >
-              {l.label}
-            </button>
-          ))}
-          <a
-            href={profile.resume}
-            download="Shaurya_Pratap_Singh_Resume.pdf"
-            data-testid="nav-mobile-resume-btn"
-            className="font-mono text-sm uppercase tracking-[0.2em] text-neon flex items-center gap-2"
-          >
-            <Download size={16} /> {nav.mobileResume}
-          </a>
+              <Download size={16} /> {nav.mobileResume}
+            </a>
+            <Link
+              to="/contact"
+              data-testid="nav-mobile-contact-cta"
+              className="inline-flex items-center justify-center rounded-full bg-neon px-4 py-3 font-mono text-xs font-bold uppercase tracking-[0.15em] text-ink"
+              onClick={() => setOpen(false)}
+            >
+              {nav.talkLabel}
+            </Link>
+          </div>
         </div>
       )}
     </header>
