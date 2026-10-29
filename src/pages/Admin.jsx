@@ -27,7 +27,7 @@ const PROJECT_ICONS = ["Users", "FileSearch", "MessagesSquare", "Mic", "Brain", 
 const WIN_ICONS = ["Trophy", "Medal", "Award", "BadgeCheck"];
 
 const emptyJob = { role: "", company: "", place: "", period: "", current: false, bullets: "", tags: "" };
-const emptyProject = { icon: "Code2", title: "", desc: "", tags: "", repo: "", repoLabel: "View Code" };
+const emptyProject = { icon: "Code2", title: "", desc: "", summary: "", tags: "", repo: "", repoLabel: "View Code", preview: "" };
 
 function setIn(setter, path, value) {
   setter((prev) => {
@@ -209,9 +209,11 @@ export default function Admin() {
       icon: projectForm.icon,
       title: projectForm.title.trim(),
       desc: projectForm.desc.trim(),
+      summary: projectForm.summary.trim() || projectForm.desc.trim(),
       tags: projectForm.tags.split(",").map((tag) => tag.trim()).filter(Boolean),
       repo: projectForm.repo.trim(),
       repoLabel: projectForm.repoLabel.trim() || "View Code",
+      preview: projectForm.preview.trim(),
     };
     const projects = [...draft.projects];
     if (projectIndex >= 0) projects[projectIndex] = { ...projects[projectIndex], ...project };
@@ -531,11 +533,13 @@ export default function Admin() {
                     </select>
                   </div>
                 </div>
-                <Area label="Description" value={projectForm.desc} onChange={(desc) => setProjectForm({ ...projectForm, desc })} testid="project-desc" />
+                <Area label="Short description" value={projectForm.desc} onChange={(desc) => setProjectForm({ ...projectForm, desc })} testid="project-desc" />
+                <Area label="Full info / summary" value={projectForm.summary} onChange={(summary) => setProjectForm({ ...projectForm, summary })} testid="project-summary" />
                 <div className="adm-grid-2">
                   <Field label="Tags, comma separated" value={projectForm.tags} onChange={(tags) => setProjectForm({ ...projectForm, tags })} />
-                  <Field label="Button label" value={projectForm.repoLabel} onChange={(repoLabel) => setProjectForm({ ...projectForm, repoLabel })} />
-                  <Field label="Link" value={projectForm.repo} onChange={(repo) => setProjectForm({ ...projectForm, repo })} testid="project-repo" />
+                  <Field label="GitHub button label" value={projectForm.repoLabel} onChange={(repoLabel) => setProjectForm({ ...projectForm, repoLabel })} />
+                  <Field label="GitHub link" value={projectForm.repo} onChange={(repo) => setProjectForm({ ...projectForm, repo })} testid="project-repo" />
+                  <Field label="Preview / live host link" value={projectForm.preview} onChange={(preview) => setProjectForm({ ...projectForm, preview })} testid="project-preview" />
                 </div>
                 <div className="adm-actions">
                   <button className="adm-btn" type="submit" disabled={saving} data-testid="project-save">{projectIndex >= 0 ? "Save project" : "Publish project"}</button>

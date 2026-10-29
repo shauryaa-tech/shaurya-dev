@@ -178,6 +178,8 @@ export const PROJECTS = [
     tags: ["PHP", "MySQL", "GenAI APIs", "XAMPP"],
     repo: "https://github.com/shauryaa-tech",
     repoLabel: "View GitHub",
+    preview: "",
+    summary: "Full-featured CRM system with AI-driven lead management and workflow automation. Generative AI APIs deliver real-time business insights, lead scoring and dashboard analytics.",
   },
   {
     num: "02",
@@ -187,6 +189,8 @@ export const PROJECTS = [
     tags: ["Python", "NLP", "TF-IDF", "Cosine Similarity"],
     repo: "https://github.com/shauryaa-tech/AI_Resume_Analyzer",
     repoLabel: "View Code",
+    preview: "",
+    summary: "NLP-based resume evaluation tool using TF-IDF vectorization and cosine similarity to score resumes against job descriptions and generate AI-driven improvement suggestions.",
   },
   {
     num: "03",
@@ -196,6 +200,8 @@ export const PROJECTS = [
     tags: ["Python", "FAISS", "LangChain", "Embeddings"],
     repo: "https://github.com/shauryaa-tech",
     repoLabel: "View GitHub",
+    preview: "",
+    summary: "Document-based Q&A system using Retrieval-Augmented Generation with FAISS vector search and text embeddings — high-accuracy answers with significantly reduced hallucination.",
   },
   {
     num: "04",
@@ -205,6 +211,8 @@ export const PROJECTS = [
     tags: ["React.js", "Gemini API", "Voice"],
     repo: "https://github.com/shauryaa-tech/Eva-Assistant",
     repoLabel: "View Code",
+    preview: "",
+    summary: "Real-time AI assistant with a dynamic React.js UI integrated with the Google Gemini API, supporting conversational AI interactions and voice-based responses.",
   },
 ];
 

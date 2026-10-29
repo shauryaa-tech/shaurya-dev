@@ -133,9 +133,11 @@ function sanitizeSite(body) {
     icon: clip(project.icon, 40) || "Code2",
     title: clip(project.title, 140),
     desc: clip(project.desc, 600),
+    summary: clip(project.summary, 4000) || clip(project.desc, 600),
     tags: tags(project.tags),
     repo: clip(project.repo, 300),
     repoLabel: clip(project.repoLabel, 40) || "View Code",
+    preview: clip(project.preview, 300),
   })).filter((project) => project.title);
 
   return {
