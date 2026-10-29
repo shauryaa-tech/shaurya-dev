@@ -336,37 +336,8 @@ export default function Admin() {
 
         {tab === "home" && (
           <section className="adm-form glass">
-            <p className="adm-kicker">Hero character</p>
-            <p className="adm-sub">Hero uses the character image below. GLB robot is removed from the hero.</p>
-            {(draft.hero.image || "/hero-character.png") && (
-              <img src={draft.hero.image || "/hero-character.png"} alt="" style={{ width: 180, height: 180, objectFit: "contain" }} />
-            )}
-            <div className="adm-actions">
-              <label className="adm-btn" style={{ width: "fit-content" }}>
-                {uploading ? "Uploading…" : "Replace character"}
-                <input
-                  type="file"
-                  accept="image/png,image/jpeg,image/webp"
-                  hidden
-                  disabled={uploading}
-                  onChange={(e) => {
-                    const file = e.target.files?.[0];
-                    e.target.value = "";
-                    if (file) uploadHero(file, "image");
-                  }}
-                />
-              </label>
-              <button
-                type="button"
-                className="adm-btn-ghost"
-                onClick={() => {
-                  patch("hero.visual", "image");
-                  patch("hero.image", "/hero-character.png");
-                }}
-              >
-                Use default character
-              </button>
-            </div>
+            <p className="adm-kicker">Hero copy</p>
+            <p className="adm-sub">Hero is text-only — the right-side character area is cleared.</p>
             <Field label="Status badge" value={draft.hero.badge} onChange={(badge) => patch("hero.badge", badge)} />
             <div className="adm-grid-2">
               <Field label="Headline line 1" value={draft.hero.line1} onChange={(line1) => patch("hero.line1", line1)} />
