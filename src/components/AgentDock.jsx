@@ -5,17 +5,17 @@ import { AGENT_PROMPTS, askPortfolioAgent } from "../lib/portfolioAgent";
 import { useSiteContent } from "../site-content";
 
 const POS_KEY = "sps-agent-pos";
-const SIZE = 84;
+const SIZE = 110;
 
-function EvaFace({ size = 56, className = "" }) {
+function EvaFace({ size = 96, className = "" }) {
   return (
     <img
-      src="/eva-icon.png"
-      alt=""
+      src="/eva-icon.jpg"
+      alt="Eva"
       width={size}
       height={size}
       draggable={false}
-      className={`object-cover select-none pointer-events-none ${className}`}
+      className={`object-contain select-none pointer-events-none drop-shadow-[0_12px_24px_rgba(0,212,255,0.35)] ${className}`}
       style={{ width: size, height: size }}
     />
   );
@@ -142,8 +142,8 @@ export default function AgentDock() {
           data-testid="agent-panel"
         >
           <div className="flex items-center gap-3 px-3.5 py-3 border-b border-white/10 bg-white/5">
-            <span className="w-10 h-10 rounded-full bg-[#0b1730] border border-neon/30 flex items-center justify-center overflow-hidden">
-              <EvaFace size={40} />
+            <span className="w-11 h-11 rounded-2xl bg-transparent flex items-center justify-center overflow-visible">
+              <EvaFace size={44} />
             </span>
             <div className="min-w-0 flex-1">
               <p className="font-display font-bold text-white text-sm flex items-center gap-1.5">
@@ -232,8 +232,8 @@ export default function AgentDock() {
         data-testid="agent-launcher"
         aria-label="Open Eva"
         title="Eva"
-        className="fixed z-[95] w-[84px] h-[84px] rounded-full bg-[#081427] border-2 border-neon/70 shadow-[0_0_36px_rgba(0,212,255,0.55)] flex items-center justify-center cursor-grab active:cursor-grabbing touch-none select-none overflow-hidden p-1"
-        style={{ left: pos.x, top: pos.y }}
+        className="fixed z-[95] w-[110px] h-[110px] rounded-none bg-transparent border-0 shadow-none flex items-center justify-center cursor-grab active:cursor-grabbing touch-none select-none overflow-visible p-0"
+        style={{ left: pos.x, top: pos.y, filter: "drop-shadow(0 10px 22px rgba(0,212,255,0.4))" }}
         onPointerDown={(e) => {
           drag.current = {
             active: true,
@@ -250,7 +250,7 @@ export default function AgentDock() {
           setOpen((value) => !value);
         }}
       >
-        <EvaFace size={76} className="rounded-full" />
+        <EvaFace size={104} />
       </button>
     </div>
   );
