@@ -5,18 +5,18 @@ import { AGENT_PROMPTS, askPortfolioAgent } from "../lib/portfolioAgent";
 import { useSiteContent } from "../site-content";
 
 const POS_KEY = "sps-agent-pos";
-const SIZE = 110;
+const SIZE = 128;
 
 function EvaFace({ size = 96, className = "" }) {
   return (
     <img
-      src="/eva-icon.jpg"
+      src="/eva-icon.png"
       alt="Eva"
       width={size}
-      height={size}
+      height={Math.round(size * 1.55)}
       draggable={false}
-      className={`object-contain select-none pointer-events-none drop-shadow-[0_12px_24px_rgba(0,212,255,0.35)] ${className}`}
-      style={{ width: size, height: size }}
+      className={`object-contain select-none pointer-events-none ${className}`}
+      style={{ width: size, height: Math.round(size * 1.55), background: "transparent" }}
     />
   );
 }
@@ -232,8 +232,8 @@ export default function AgentDock() {
         data-testid="agent-launcher"
         aria-label="Open Eva"
         title="Eva"
-        className="fixed z-[95] w-[110px] h-[110px] rounded-none bg-transparent border-0 shadow-none flex items-center justify-center cursor-grab active:cursor-grabbing touch-none select-none overflow-visible p-0"
-        style={{ left: pos.x, top: pos.y, filter: "drop-shadow(0 10px 22px rgba(0,212,255,0.4))" }}
+        className="fixed z-[95] w-[128px] h-[198px] rounded-none bg-transparent border-0 shadow-none flex items-center justify-center cursor-grab active:cursor-grabbing touch-none select-none overflow-visible p-0"
+        style={{ left: pos.x, top: pos.y, filter: "drop-shadow(0 14px 28px rgba(0,212,255,0.45))" }}
         onPointerDown={(e) => {
           drag.current = {
             active: true,
