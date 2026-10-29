@@ -88,17 +88,17 @@ export default function Nav() {
         scrolled || open ? "glass shadow-[0_8px_32px_rgba(0,0,0,0.5)]" : "bg-transparent"
       }`}
     >
-      <div className="nav-row max-w-7xl mx-auto px-4 sm:px-5 md:px-8 h-[64px] md:h-[72px] flex items-center justify-between gap-2">
+      <div className="nav-row max-w-7xl mx-auto px-5 md:px-8 h-[64px] md:h-[72px] flex items-center justify-between">
         <Link
           to="/"
           data-testid="nav-logo-link"
-          className="flex items-center gap-2.5 group min-w-0"
+          className="flex items-center gap-3 group min-w-0"
           onClick={() => setOpen(false)}
         >
           <span className="t-fast group-hover:rotate-[8deg] shrink-0">
-            <Logo size={34} />
+            <Logo />
           </span>
-          <span className="font-display font-bold text-white text-sm tracking-wide truncate">
+          <span className="font-display font-bold text-white text-sm tracking-wide hidden sm:block truncate">
             {profile.brand}<span className="text-neon">{profile.brandAccent}</span>
           </span>
         </Link>
@@ -117,7 +117,7 @@ export default function Nav() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+        <div className="flex items-center gap-3 shrink-0">
           <a
             href={profile.resume}
             download="Shaurya_Pratap_Singh_Resume.pdf"
