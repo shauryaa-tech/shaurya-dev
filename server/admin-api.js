@@ -96,7 +96,7 @@ function tags(list) {
 
 function mediaPath(value, fallback) {
   const next = clip(value, 200);
-  if (next.startsWith("/uploads/") || next.startsWith("/models/")) return next;
+  if (next.startsWith("/uploads/") || next.startsWith("/models/") || next === "/hero-character.png" || next === "/about-character.png") return next;
   return fallback;
 }
 
@@ -181,9 +181,9 @@ function sanitizeSite(body) {
       scroll: clip(hero.scroll, 20),
       rotate: clip(hero.rotate, 40),
       chips: lines(hero.chips, 4),
-      visual: hero.visual === "image" ? "image" : hero.visual === "showcase" ? "showcase" : "model",
+      visual: "image",
       model: mediaPath(hero.model, "/models/robot.glb"),
-      image: mediaPath(hero.image, ""),
+      image: mediaPath(hero.image, "/hero-character.png") || "/hero-character.png",
     },
     metrics: (Array.isArray(body.metrics) ? body.metrics : []).slice(0, 6).map((metric) => ({
       value: clip(metric.value, 16),

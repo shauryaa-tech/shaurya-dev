@@ -61,9 +61,9 @@
       ".NET",
       "Gemini"
     ],
-    "visual": "showcase",
+    "visual": "image",
     "model": "/models/robot.glb",
-    "image": ""
+    "image": "/hero-character.png"
   },
   "metrics": [
     {

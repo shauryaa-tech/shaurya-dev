@@ -2,10 +2,10 @@ import { useRef } from "react";
 import { motion, useTransform, useScroll } from "framer-motion";
 import { Download, ArrowDown } from "lucide-react";
 import { KineticLine, Reveal } from "../components/Kinetic";
-import HeroShowcase from "../components/HeroShowcase";
-import Robot3D from "../components/Robot3D";
 import { scrollToId } from "../components/Nav";
 import { useSiteContent } from "../site-content";
+
+const HERO_CHARACTER = "/hero-character.png";
 
 const CHIP_SPOTS = [
   { cls: "top-[10%] left-1 md:left-[2%]", delay: "0s", tone: "neon" },
@@ -128,31 +128,18 @@ export default function Hero() {
               className="relative h-[400px] sm:h-[500px] lg:h-[600px] rounded-[2.15rem] overflow-hidden bg-ink/70"
               data-testid="hero-robot-canvas"
             >
-              <div className="hero-stage-scan pointer-events-none absolute inset-x-0 h-24 bg-gradient-to-b from-transparent via-neon/10 to-transparent z-[1]" />
-              <div className="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(circle_at_50%_40%,transparent_35%,rgba(3,7,18,0.55)_100%)]" />
               <span className="hero-corner hero-corner-tl" />
               <span className="hero-corner hero-corner-tr" />
               <span className="hero-corner hero-corner-bl" />
               <span className="hero-corner hero-corner-br" />
-              {hero.visual === "image" && hero.image ? (
-                <img src={hero.image} alt={`${profile.name}, ${profile.role}`} className="relative z-0 w-full h-full object-contain" />
-              ) : hero.visual === "model" ? (
-                <Robot3D src={hero.model || "/models/robot.glb"} />
-              ) : (
-                <HeroShowcase />
-              )}
+              <img
+                src={hero.image || HERO_CHARACTER}
+                alt={`${profile.name}, ${profile.role}`}
+                className="relative z-0 w-full h-full object-contain object-bottom"
+                data-testid="hero-character-img"
+              />
             </div>
           </div>
-
-          {hero.visual === "model" && (
-            <div
-              className="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 inline-flex items-center gap-2 rounded-full border border-neon/30 bg-ink/80 backdrop-blur-md px-4 py-2 font-mono text-[10px] uppercase tracking-[0.22em] text-neon shadow-[0_0_24px_rgba(0,240,255,0.25)] pointer-events-none"
-              data-testid="hero-rotate-hint"
-            >
-              <span className="hero-hint-pulse w-1.5 h-1.5 rounded-full bg-neon" />
-              {hero.rotate}
-            </div>
-          )}
 
           {chips.map((c) => (
             <div

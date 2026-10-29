@@ -160,7 +160,7 @@ export default function Admin() {
           next.profile.resume = data.url;
           return next;
         }
-        next.hero.visual = kind === "image" ? "image" : "model";
+        next.hero.visual = "image";
         if (kind === "image") next.hero.image = data.url;
         else next.hero.model = data.url;
         return next;
@@ -337,64 +337,36 @@ export default function Admin() {
         {tab === "home" && (
           <section className="adm-form glass">
             <p className="adm-kicker">Hero character</p>
-            <div className="adm-actions">
-              <button type="button" className={`adm-tab ${draft.hero.visual === "showcase" || !draft.hero.visual ? "active" : ""}`} onClick={() => patch("hero.visual", "showcase")}>Showcase</button>
-              <button type="button" className={`adm-tab ${draft.hero.visual === "model" ? "active" : ""}`} onClick={() => patch("hero.visual", "model")}>3D robot</button>
-              <button type="button" className={`adm-tab ${draft.hero.visual === "image" ? "active" : ""}`} onClick={() => patch("hero.visual", "image")}>Photo</button>
-            </div>
-            {draft.hero.visual === "showcase" || !draft.hero.visual ? (
-              <p className="adm-sub">Hero shows the AI monogram + terminal panel. Chips still float around it.</p>
-            ) : draft.hero.visual === "image" ? (
-              <>
-                {draft.hero.image && (
-                  <img src={draft.hero.image} alt="" style={{ width: 180, height: 180, objectFit: "contain" }} />
-                )}
-                <label className="adm-btn" style={{ width: "fit-content" }}>
-                  {uploading ? "Uploading…" : "Upload photo"}
-                  <input
-                    type="file"
-                    accept="image/png,image/jpeg,image/webp"
-                    hidden
-                    disabled={uploading}
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      e.target.value = "";
-                      if (file) uploadHero(file, "image");
-                    }}
-                  />
-                </label>
-              </>
-            ) : (
-              <>
-                <p className="adm-sub">Current model: {draft.hero.model || "/models/robot.glb"}</p>
-                <div className="adm-actions">
-                  <label className="adm-btn" style={{ width: "fit-content" }}>
-                    {uploading ? "Uploading…" : "Replace .glb"}
-                    <input
-                      type="file"
-                      accept=".glb,model/gltf-binary"
-                      hidden
-                      disabled={uploading}
-                      onChange={(e) => {
-                        const file = e.target.files?.[0];
-                        e.target.value = "";
-                        if (file) uploadHero(file, "model");
-                      }}
-                    />
-                  </label>
-                  <button
-                    type="button"
-                    className="adm-btn-ghost"
-                    onClick={() => {
-                      patch("hero.visual", "model");
-                      patch("hero.model", "/models/robot.glb");
-                    }}
-                  >
-                    Use original robot
-                  </button>
-                </div>
-              </>
+            <p className="adm-sub">Hero uses the character image below. GLB robot is removed from the hero.</p>
+            {(draft.hero.image || "/hero-character.png") && (
+              <img src={draft.hero.image || "/hero-character.png"} alt="" style={{ width: 180, height: 180, objectFit: "contain" }} />
             )}
+            <div className="adm-actions">
+              <label className="adm-btn" style={{ width: "fit-content" }}>
+                {uploading ? "Uploading…" : "Replace character"}
+                <input
+                  type="file"
+                  accept="image/png,image/jpeg,image/webp"
+                  hidden
+                  disabled={uploading}
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    e.target.value = "";
+                    if (file) uploadHero(file, "image");
+                  }}
+                />
+              </label>
+              <button
+                type="button"
+                className="adm-btn-ghost"
+                onClick={() => {
+                  patch("hero.visual", "image");
+                  patch("hero.image", "/hero-character.png");
+                }}
+              >
+                Use default character
+              </button>
+            </div>
             <Field label="Status badge" value={draft.hero.badge} onChange={(badge) => patch("hero.badge", badge)} />
             <div className="adm-grid-2">
               <Field label="Headline line 1" value={draft.hero.line1} onChange={(line1) => patch("hero.line1", line1)} />
