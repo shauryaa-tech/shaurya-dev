@@ -219,7 +219,7 @@ code,
 kbd,
 samp,
 pre {
-  font-family: "JetBrains Mono", monospace; /* 1 */
+  font-family: "Poppins", sans-serif; /* 1 */
   font-feature-settings: normal; /* 2 */
   font-variation-settings: normal; /* 3 */
   font-size: 1em; /* 4 */
@@ -1692,13 +1692,13 @@ video {
   vertical-align: middle;
 }
 .font-body {
-  font-family: "Plus Jakarta Sans", sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 .font-display {
-  font-family: "Syne", sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 .font-mono {
-  font-family: "JetBrains Mono", monospace;
+  font-family: "Poppins", sans-serif;
 }
 .text-2xl {
   font-size: 1.5rem;
@@ -2042,7 +2042,7 @@ html {
 body {
   background: var(--ink);
   color: #cbd5e1;
-  font-family: "Plus Jakarta Sans", sans-serif;
+  font-family: "Poppins", sans-serif;
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
 }

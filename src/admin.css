@@ -10,7 +10,7 @@
 }
 
 .adm-kicker {
-  font-family: "JetBrains Mono", monospace;
+  font-family: "Poppins", sans-serif;
   font-size: 11px;
   letter-spacing: 0.28em;
   text-transform: uppercase;
@@ -19,7 +19,7 @@
 }
 
 .adm-title {
-  font-family: "Syne", sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: 800;
   color: #fff;
   font-size: clamp(2rem, 6vw, 3.4rem);
@@ -45,7 +45,7 @@
 .adm-btn-ghost,
 .adm-btn-danger {
   border-radius: 999px;
-  font-family: "JetBrains Mono", monospace;
+  font-family: "Poppins", sans-serif;
   font-size: 11px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -106,7 +106,7 @@
 }
 
 .adm-item h3 {
-  font-family: "Syne", sans-serif;
+  font-family: "Poppins", sans-serif;
   color: #fff;
   font-size: 1.15rem;
 }
@@ -138,7 +138,7 @@
 
 .adm-field label {
   display: block;
-  font-family: "JetBrains Mono", monospace;
+  font-family: "Poppins", sans-serif;
   font-size: 10px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -225,13 +225,13 @@
 
 .adm-stat strong {
   display: block;
-  font-family: "Syne", sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 2rem;
   color: #fff;
 }
 
 .adm-stat span {
-  font-family: "JetBrains Mono", monospace;
+  font-family: "Poppins", sans-serif;
   font-size: 10px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -266,7 +266,7 @@
 
 .adm-bar em {
   font-style: normal;
-  font-family: "JetBrains Mono", monospace;
+  font-family: "Poppins", sans-serif;
   font-size: 10px;
   color: #64748b;
 }
@@ -286,7 +286,7 @@
 }
 
 .adm-table th {
-  font-family: "JetBrains Mono", monospace;
+  font-family: "Poppins", sans-serif;
   font-size: 10px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
