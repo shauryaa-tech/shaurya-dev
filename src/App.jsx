@@ -6,6 +6,7 @@ import { Toaster } from "sonner";
 import Nav from "./components/Nav";
 import Seo from "./components/Seo";
 import Cursor from "./components/Cursor";
+import AgentDock from "./components/AgentDock";
 import Home from "./pages/Home";
 import Contact from "./pages/Contact";
 import Login from "./pages/Login";
@@ -94,6 +95,7 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/admin" element={<Admin />} />
         </Routes>
+        <AgentDock />
         </SiteContentProvider>
         <Toaster
           position="bottom-right"

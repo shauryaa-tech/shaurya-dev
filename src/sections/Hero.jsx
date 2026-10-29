@@ -1,6 +1,5 @@
 import { Download, ArrowDown } from "lucide-react";
 import { KineticLine, Reveal } from "../components/Kinetic";
-import HeroAgent from "../components/HeroAgent";
 import { scrollToId } from "../components/Nav";
 import { useSiteContent } from "../site-content";
 
@@ -27,8 +26,8 @@ export default function Hero() {
       <div className="absolute -top-24 -left-24 w-[440px] h-[440px] rounded-full bg-neon/15 blur-[130px]" />
       <div className="absolute bottom-0 right-0 w-[480px] h-[480px] rounded-full bg-viol/15 blur-[140px]" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-5 md:px-8 w-full grid lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-8 items-center py-16 lg:py-0">
-        <div>
+      <div className="relative z-10 max-w-7xl mx-auto px-5 md:px-8 w-full py-16 lg:py-0">
+        <div className="max-w-3xl">
           <Reveal y={12}>
             <div
               data-testid="hero-status-badge"
@@ -96,10 +95,6 @@ export default function Hero() {
             ))}
           </Reveal>
         </div>
-
-        <Reveal delay={0.25}>
-          <HeroAgent />
-        </Reveal>
       </div>
 
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-2 z-10">
