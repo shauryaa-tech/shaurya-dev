@@ -5,48 +5,19 @@ import { AGENT_PROMPTS, askPortfolioAgent } from "../lib/portfolioAgent";
 import { useSiteContent } from "../site-content";
 
 const POS_KEY = "sps-agent-pos";
-const SIZE = 62;
+const SIZE = 84;
 
-function EvaIcon({ size = 28, id = "eva" }) {
+function EvaFace({ size = 56, className = "" }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 64 64" fill="none" aria-hidden="true">
-      <defs>
-        <linearGradient id={`${id}-shell`} x1="18" y1="8" x2="46" y2="40" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#ffffff" />
-          <stop offset="1" stopColor="#d9e7f5" />
-        </linearGradient>
-        <linearGradient id={`${id}-blue`} x1="20" y1="10" x2="44" y2="34" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#5ad6ff" />
-          <stop offset="1" stopColor="#1ea8ff" />
-        </linearGradient>
-        <radialGradient id={`${id}-eye`} cx="50%" cy="45%" r="55%">
-          <stop stopColor="#b8f7ff" />
-          <stop offset="1" stopColor="#00d4ff" />
-        </radialGradient>
-      </defs>
-      {/* ears */}
-      <circle cx="11" cy="28" r="6.2" fill={`url(#${id}-shell)`} />
-      <circle cx="53" cy="28" r="6.2" fill={`url(#${id}-shell)`} />
-      <circle cx="11" cy="28" r="3.2" fill={`url(#${id}-blue)`} />
-      <circle cx="53" cy="28" r="3.2" fill={`url(#${id}-blue)`} />
-      {/* head */}
-      <path
-        d="M18 30c0-10.5 6.3-18 14-18s14 7.5 14 18v2.5c0 1.4-1.1 2.5-2.5 2.5H20.5c-1.4 0-2.5-1.1-2.5-2.5V30z"
-        fill={`url(#${id}-shell)`}
-      />
-      {/* blue crest */}
-      <path d="M29.2 13.2c.8-1.4 4.8-1.4 5.6 0 1.1 2 .8 5.4.8 8.4h-7.2c0-3 .3-6.4.8-8.4z" fill={`url(#${id}-blue)`} />
-      {/* visor */}
-      <rect x="20.5" y="22" width="23" height="14.5" rx="7.2" fill="#0b1220" />
-      <rect x="21.5" y="23" width="21" height="12.5" rx="6.4" fill="#111827" />
-      {/* eyes */}
-      <circle cx="27.8" cy="29.2" r="3.1" fill={`url(#${id}-eye)`} />
-      <circle cx="36.2" cy="29.2" r="3.1" fill={`url(#${id}-eye)`} />
-      <circle cx="26.9" cy="28.3" r="0.9" fill="#ffffff" opacity="0.9" />
-      <circle cx="35.3" cy="28.3" r="0.9" fill="#ffffff" opacity="0.9" />
-      {/* smile */}
-      <rect x="30.2" y="33.4" width="3.6" height="1.3" rx="0.65" fill="#5ad6ff" opacity="0.9" />
-    </svg>
+    <img
+      src="/eva-icon.png"
+      alt=""
+      width={size}
+      height={size}
+      draggable={false}
+      className={`object-cover select-none pointer-events-none ${className}`}
+      style={{ width: size, height: size }}
+    />
   );
 }
 
@@ -171,8 +142,8 @@ export default function AgentDock() {
           data-testid="agent-panel"
         >
           <div className="flex items-center gap-3 px-3.5 py-3 border-b border-white/10 bg-white/5">
-            <span className="w-9 h-9 rounded-xl bg-[#0b1730] border border-neon/30 flex items-center justify-center overflow-hidden">
-              <EvaIcon size={28} id="eva-panel" />
+            <span className="w-10 h-10 rounded-full bg-[#0b1730] border border-neon/30 flex items-center justify-center overflow-hidden">
+              <EvaFace size={40} />
             </span>
             <div className="min-w-0 flex-1">
               <p className="font-display font-bold text-white text-sm flex items-center gap-1.5">
@@ -261,7 +232,7 @@ export default function AgentDock() {
         data-testid="agent-launcher"
         aria-label="Open Eva"
         title="Eva"
-        className="fixed z-[95] w-[62px] h-[62px] rounded-full bg-[#07111f] border border-neon/40 shadow-[0_0_28px_rgba(0,212,255,0.45)] flex items-center justify-center cursor-grab active:cursor-grabbing touch-none select-none overflow-hidden"
+        className="fixed z-[95] w-[84px] h-[84px] rounded-full bg-[#081427] border-2 border-neon/70 shadow-[0_0_36px_rgba(0,212,255,0.55)] flex items-center justify-center cursor-grab active:cursor-grabbing touch-none select-none overflow-hidden p-1"
         style={{ left: pos.x, top: pos.y }}
         onPointerDown={(e) => {
           drag.current = {
@@ -279,8 +250,7 @@ export default function AgentDock() {
           setOpen((value) => !value);
         }}
       >
-        <span className="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(0,212,255,0.22),transparent_65%)] pointer-events-none" />
-        <EvaIcon size={46} id="eva-launcher" />
+        <EvaFace size={76} className="rounded-full" />
       </button>
     </div>
   );
