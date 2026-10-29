@@ -4,6 +4,7 @@ import crypto from "crypto";
 import nodemailer from "nodemailer";
 
 import { contactMail } from "./email-template.js";
+import { answerFromPortfolio, answerWithGemini } from "./portfolio-agent.js";
 
 const dataDir = path.resolve("data");
 const contentPath = path.join(dataDir, "content.json");
@@ -396,6 +397,7 @@ export function adminApiPlugin({
   smtpPass = "",
   mailHook = "",
   mailSecret = "",
+  geminiKey = "",
 } = {}) {
   const tokens = new Set();
   const contactHits = new Map();
@@ -586,6 +588,22 @@ export function adminApiPlugin({
           if (req.method === "GET" && pathname === "/api/me") {
             if (!authed(req)) return send(res, 401, { detail: "Login required" });
             return send(res, 200, { user });
+          }
+
+          if (req.method === "POST" && pathname === "/api/agent") {
+            const body = await readBody(req);
+            const question = clip(body.question, 500);
+            if (question.length < 2) return send(res, 400, { detail: "Ask a short question" });
+            const content = readJson(contentPath, {});
+            if (geminiKey) {
+              try {
+                const answer = await answerWithGemini(content, question, geminiKey);
+                return send(res, 200, { answer, source: "gemini" });
+              } catch (err) {
+                console.error("agent gemini:", err?.message || err);
+              }
+            }
+            return send(res, 200, { answer: answerFromPortfolio(content, question), source: "local" });
           }
 
           return send(res, 404, { detail: "Not found" });

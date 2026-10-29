@@ -337,7 +337,7 @@ export default function Admin() {
         {tab === "home" && (
           <section className="adm-form glass">
             <p className="adm-kicker">Hero copy</p>
-            <p className="adm-sub">Hero is text-only — the right-side character area is cleared.</p>
+            <p className="adm-sub">Right side shows the portfolio AI agent that answers from this site content.</p>
             <Field label="Status badge" value={draft.hero.badge} onChange={(badge) => patch("hero.badge", badge)} />
             <div className="adm-grid-2">
               <Field label="Headline line 1" value={draft.hero.line1} onChange={(line1) => patch("hero.line1", line1)} />
