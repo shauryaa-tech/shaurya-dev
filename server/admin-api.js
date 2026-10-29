@@ -181,7 +181,7 @@ function sanitizeSite(body) {
       scroll: clip(hero.scroll, 20),
       rotate: clip(hero.rotate, 40),
       chips: lines(hero.chips, 4),
-      visual: hero.visual === "image" ? "image" : "model",
+      visual: hero.visual === "image" ? "image" : hero.visual === "showcase" ? "showcase" : "model",
       model: mediaPath(hero.model, "/models/robot.glb"),
       image: mediaPath(hero.image, ""),
     },

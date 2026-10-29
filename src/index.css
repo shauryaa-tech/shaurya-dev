@@ -2218,6 +2218,20 @@ body::after {
   animation: pulse-dot 2s ease-out infinite;
 }
 
+.hero-showcase-orb {
+  animation: floaty 7s ease-in-out infinite;
+}
+
+.hero-showcase-cursor {
+  animation: hero-cursor 1s steps(1) infinite;
+}
+
+@keyframes hero-cursor {
+  50% {
+    opacity: 0;
+  }
+}
+
 @keyframes pulse-dot {
   0%,
   100% {

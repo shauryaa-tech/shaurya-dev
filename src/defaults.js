@@ -49,7 +49,7 @@ export const DEFAULT_SITE = {
     scroll: "Scroll",
     rotate: "Drag to rotate",
     chips: ["GPT", "RAG", ".NET", "Gemini"],
-    visual: "model",
+    visual: "showcase",
     model: "/models/robot.glb",
     image: "",
   },

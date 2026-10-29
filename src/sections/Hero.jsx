@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { motion, useTransform, useScroll } from "framer-motion";
 import { Download, ArrowDown } from "lucide-react";
 import { KineticLine, Reveal } from "../components/Kinetic";
+import HeroShowcase from "../components/HeroShowcase";
 import Robot3D from "../components/Robot3D";
 import { scrollToId } from "../components/Nav";
 import { useSiteContent } from "../site-content";
@@ -135,13 +136,15 @@ export default function Hero() {
               <span className="hero-corner hero-corner-br" />
               {hero.visual === "image" && hero.image ? (
                 <img src={hero.image} alt={`${profile.name}, ${profile.role}`} className="relative z-0 w-full h-full object-contain" />
-              ) : (
+              ) : hero.visual === "model" ? (
                 <Robot3D src={hero.model || "/models/robot.glb"} />
+              ) : (
+                <HeroShowcase />
               )}
             </div>
           </div>
 
-          {hero.visual !== "image" && (
+          {hero.visual === "model" && (
             <div
               className="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 inline-flex items-center gap-2 rounded-full border border-neon/30 bg-ink/80 backdrop-blur-md px-4 py-2 font-mono text-[10px] uppercase tracking-[0.22em] text-neon shadow-[0_0_24px_rgba(0,240,255,0.25)] pointer-events-none"
               data-testid="hero-rotate-hint"

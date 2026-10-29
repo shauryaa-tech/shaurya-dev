@@ -338,10 +338,13 @@ export default function Admin() {
           <section className="adm-form glass">
             <p className="adm-kicker">Hero character</p>
             <div className="adm-actions">
-              <button type="button" className={`adm-tab ${draft.hero.visual !== "image" ? "active" : ""}`} onClick={() => patch("hero.visual", "model")}>3D robot</button>
+              <button type="button" className={`adm-tab ${draft.hero.visual === "showcase" || !draft.hero.visual ? "active" : ""}`} onClick={() => patch("hero.visual", "showcase")}>Showcase</button>
+              <button type="button" className={`adm-tab ${draft.hero.visual === "model" ? "active" : ""}`} onClick={() => patch("hero.visual", "model")}>3D robot</button>
               <button type="button" className={`adm-tab ${draft.hero.visual === "image" ? "active" : ""}`} onClick={() => patch("hero.visual", "image")}>Photo</button>
             </div>
-            {draft.hero.visual === "image" ? (
+            {draft.hero.visual === "showcase" || !draft.hero.visual ? (
+              <p className="adm-sub">Hero shows the AI monogram + terminal panel. Chips still float around it.</p>
+            ) : draft.hero.visual === "image" ? (
               <>
                 {draft.hero.image && (
                   <img src={draft.hero.image} alt="" style={{ width: 180, height: 180, objectFit: "contain" }} />
