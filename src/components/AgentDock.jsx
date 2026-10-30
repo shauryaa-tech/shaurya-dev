@@ -4,9 +4,9 @@ import { Send, Sparkles, X } from "lucide-react";
 import { AGENT_PROMPTS, askPortfolioAgent } from "../lib/portfolioAgent";
 import { useSiteContent } from "../site-content";
 
-const POS_KEY = "sps-agent-pos-v4";
-const WIDTH = 128;
-const HEIGHT = 204;
+const POS_KEY = "sps-agent-pos-v5";
+const WIDTH = 92;
+const HEIGHT = 146;
 
 function EvaFace({ size = 96, className = "", live = false }) {
   const h = Math.round(size * 1.58);
@@ -283,7 +283,7 @@ export default function AgentDock() {
         }}
       >
         <span className="eva-aura" aria-hidden />
-        <EvaFace size={126} live />
+        <EvaFace size={88} live />
       </button>
     </div>
   );
