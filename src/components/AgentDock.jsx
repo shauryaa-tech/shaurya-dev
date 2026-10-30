@@ -4,19 +4,21 @@ import { Send, Sparkles, X } from "lucide-react";
 import { AGENT_PROMPTS, askPortfolioAgent } from "../lib/portfolioAgent";
 import { useSiteContent } from "../site-content";
 
-const POS_KEY = "sps-agent-pos";
-const SIZE = 128;
+const POS_KEY = "sps-agent-pos-v2";
+const WIDTH = 118;
+const HEIGHT = 176;
 
 function EvaFace({ size = 96, className = "" }) {
+  const h = Math.round(size * 1.48);
   return (
     <img
       src="/eva-icon.png"
       alt="Eva"
       width={size}
-      height={Math.round(size * 1.55)}
+      height={h}
       draggable={false}
       className={`object-contain select-none pointer-events-none ${className}`}
-      style={{ width: size, height: Math.round(size * 1.55), background: "transparent" }}
+      style={{ width: size, height: h, background: "transparent" }}
     />
   );
 }
@@ -34,12 +36,16 @@ function loadPos() {
 }
 
 function clampPos(x, y) {
-  const maxX = Math.max(12, window.innerWidth - SIZE - 12);
-  const maxY = Math.max(12, window.innerHeight - SIZE - 12);
+  const maxX = Math.max(12, window.innerWidth - WIDTH - 12);
+  const maxY = Math.max(12, window.innerHeight - HEIGHT - 12);
   return {
     x: Math.min(maxX, Math.max(12, x)),
     y: Math.min(maxY, Math.max(12, y)),
   };
+}
+
+function defaultSidePos() {
+  return clampPos(window.innerWidth - WIDTH - 18, Math.round(window.innerHeight * 0.38));
 }
 
 export default function AgentDock() {
@@ -51,6 +57,7 @@ export default function AgentDock() {
   const [pos, setPos] = useState(() => ({ x: 0, y: 0 }));
   const [ready, setReady] = useState(false);
   const [open, setOpen] = useState(false);
+  const [dragging, setDragging] = useState(false);
   const [messages, setMessages] = useState([
     {
       role: "agent",
@@ -61,13 +68,11 @@ export default function AgentDock() {
   const [busy, setBusy] = useState(false);
   const endRef = useRef(null);
   const drag = useRef({ active: false, moved: false, ox: 0, oy: 0, startX: 0, startY: 0 });
+  const inputRef = useRef(null);
 
   useEffect(() => {
     const saved = loadPos();
-    const next = saved
-      ? clampPos(saved.x, saved.y)
-      : clampPos(window.innerWidth - SIZE - 22, window.innerHeight - SIZE - 22);
-    setPos(next);
+    setPos(saved ? clampPos(saved.x, saved.y) : defaultSidePos());
     setReady(true);
     const onResize = () => setPos((current) => clampPos(current.x, current.y));
     window.addEventListener("resize", onResize);
@@ -77,6 +82,13 @@ export default function AgentDock() {
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }, [messages, busy, open]);
+
+  useEffect(() => {
+    if (open) {
+      const t = setTimeout(() => inputRef.current?.focus(), 120);
+      return () => clearTimeout(t);
+    }
+  }, [open]);
 
   useEffect(() => {
     const onMove = (e) => {
@@ -91,6 +103,7 @@ export default function AgentDock() {
     const onUp = () => {
       if (!drag.current.active) return;
       drag.current.active = false;
+      setDragging(false);
       setPos((current) => {
         const next = clampPos(current.x, current.y);
         localStorage.setItem(POS_KEY, JSON.stringify(next));
@@ -130,8 +143,8 @@ export default function AgentDock() {
     }
   };
 
-  const panelLeft = Math.min(pos.x, window.innerWidth - 360);
-  const panelTop = Math.min(Math.max(12, pos.y - 420), window.innerHeight - 440);
+  const panelLeft = Math.min(Math.max(12, pos.x - 240), window.innerWidth - 360);
+  const panelTop = Math.min(Math.max(12, pos.y - 20), window.innerHeight - 440);
 
   return (
     <div className="agent-dock" data-testid="agent-dock">
@@ -143,7 +156,7 @@ export default function AgentDock() {
         >
           <div className="flex items-center gap-3 px-3.5 py-3 border-b border-white/10 bg-white/5">
             <span className="w-11 h-11 rounded-2xl bg-transparent flex items-center justify-center overflow-visible">
-              <EvaFace size={44} />
+              <EvaFace size={40} />
             </span>
             <div className="min-w-0 flex-1">
               <p className="font-display font-bold text-white text-sm flex items-center gap-1.5">
@@ -208,6 +221,7 @@ export default function AgentDock() {
             }}
           >
             <input
+              ref={inputRef}
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder={`Ask about ${first}…`}
@@ -231,9 +245,15 @@ export default function AgentDock() {
         type="button"
         data-testid="agent-launcher"
         aria-label="Open Eva"
-        title="Eva"
-        className="fixed z-[95] w-[128px] h-[198px] rounded-none bg-transparent border-0 shadow-none flex items-center justify-center cursor-grab active:cursor-grabbing touch-none select-none overflow-visible p-0"
-        style={{ left: pos.x, top: pos.y, filter: "drop-shadow(0 14px 28px rgba(0,212,255,0.45))" }}
+        title="Ask Eva"
+        className={`fixed z-[95] rounded-none bg-transparent border-0 shadow-none flex items-center justify-center cursor-grab active:cursor-grabbing touch-none select-none overflow-visible p-0 eva-float ${dragging ? "is-dragging" : ""}`}
+        style={{
+          left: pos.x,
+          top: pos.y,
+          width: WIDTH,
+          height: HEIGHT,
+          filter: "drop-shadow(0 14px 28px rgba(0,212,255,0.45))",
+        }}
         onPointerDown={(e) => {
           drag.current = {
             active: true,
@@ -243,6 +263,7 @@ export default function AgentDock() {
             startX: e.clientX,
             startY: e.clientY,
           };
+          setDragging(true);
           e.currentTarget.setPointerCapture?.(e.pointerId);
         }}
         onClick={() => {
@@ -250,7 +271,7 @@ export default function AgentDock() {
           setOpen((value) => !value);
         }}
       >
-        <EvaFace size={104} />
+        <EvaFace size={110} />
       </button>
     </div>
   );

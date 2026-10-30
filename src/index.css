@@ -2139,6 +2139,23 @@ body::after {
   animation: floaty 6s ease-in-out infinite;
 }
 
+@keyframes eva-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(2deg);
+  }
+}
+.eva-float {
+  animation: eva-float 3.4s ease-in-out infinite;
+  will-change: transform;
+}
+.eva-float.is-dragging {
+  animation: none;
+}
+
 .hero-orbit {
   animation: hero-spin 28s linear infinite;
 }
