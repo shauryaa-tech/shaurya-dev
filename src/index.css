@@ -2195,54 +2195,38 @@ body::after {
 
 .eva-visage {
   position: absolute;
-  left: 25.5%;
-  top: 12.5%;
-  width: 49%;
-  height: 29%;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
   z-index: 2;
+  overflow: visible;
+}
+
+.eva-eyes {
+  transform-origin: 323px 210px;
+  animation: eva-glance 6.2s ease-in-out infinite;
 }
 
 .eva-eye {
-  position: absolute;
-  top: 34%;
-  width: 13%;
-  height: 20%;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 32%, #ffffff 0%, #9fffffff 18%, #3defff 45%, #00a8ff 78%, #0066aa 100%);
-  box-shadow:
-    0 0 4px rgba(90, 240, 255, 1),
-    0 0 9px rgba(0, 200, 255, 0.65),
-    inset 0 -1px 2px rgba(0, 60, 120, 0.35);
-  animation:
-    eva-blink 4.8s ease-in-out infinite,
-    eva-glance 6.2s ease-in-out infinite;
+  fill: url(#eva-eye-grad);
+  fill: #3defff;
+  filter: drop-shadow(0 0 4px rgba(0, 230, 255, 0.95));
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: eva-blink 4.8s ease-in-out infinite;
 }
 
-.eva-eye--l {
-  left: 24%;
-  animation-delay: 0s, 0s;
-}
-
-.eva-eye--r {
-  right: 24%;
-  left: auto;
-  animation-delay: 0.1s, 0s;
+.eva-eye:last-child {
+  animation-delay: 0.1s;
 }
 
 .eva-mouth {
-  position: absolute;
-  left: 50%;
-  top: 62%;
-  bottom: auto;
-  width: 22%;
-  height: 18%;
-  border: 2px solid transparent;
-  border-bottom-color: #6ef9ff;
-  border-radius: 50%;
-  transform: translateX(-50%);
-  animation: eva-talk 2.6s ease-in-out infinite;
+  stroke: #6ef9ff;
+  stroke-width: 7;
   filter: drop-shadow(0 0 4px rgba(0, 230, 255, 0.9));
+  transform-origin: 323px 280px;
+  animation: eva-talk 2.6s ease-in-out infinite;
 }
 
 @keyframes eva-blink {
@@ -2254,53 +2238,45 @@ body::after {
     opacity: 1;
   }
   43.5% {
-    transform: scaleY(0.08);
-    opacity: 0.7;
+    transform: scaleY(0.12);
+    opacity: 0.75;
   }
 }
 
 @keyframes eva-glance {
   0%,
-  18%,
+  20%,
   100% {
-    translate: 0 0;
+    transform: translate(0, 0);
   }
-  26% {
-    translate: 2px 0;
+  30% {
+    transform: translate(6px, 0);
   }
-  34% {
-    translate: -2px 1px;
+  40% {
+    transform: translate(-5px, 2px);
   }
-  42%,
-  68% {
-    translate: 0 0;
+  50%,
+  70% {
+    transform: translate(0, 0);
   }
 }
 
 @keyframes eva-talk {
   0%,
   100% {
-    width: 20%;
-    height: 16%;
-    border-bottom-width: 1.5px;
-    opacity: 0.88;
+    transform: scale(1, 1);
+    opacity: 0.9;
   }
   30% {
-    width: 26%;
-    height: 22%;
-    border-bottom-width: 2.5px;
+    transform: scale(1.08, 1.25);
     opacity: 1;
   }
   52% {
-    width: 18%;
-    height: 12%;
-    border-bottom-width: 1.5px;
-    opacity: 0.8;
+    transform: scale(0.92, 0.75);
+    opacity: 0.85;
   }
   74% {
-    width: 24%;
-    height: 20%;
-    border-bottom-width: 2px;
+    transform: scale(1.05, 1.15);
     opacity: 1;
   }
 }

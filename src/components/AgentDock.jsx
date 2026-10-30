@@ -21,15 +21,28 @@ function EvaFace({ size = 96, className = "", live = false }) {
         width={size}
         height={h}
         draggable={false}
-        className="object-contain absolute inset-0 w-full h-full"
-        style={{ background: "transparent", imageRendering: "auto" }}
+        className="absolute inset-0 h-full w-full object-fill"
+        style={{ background: "transparent" }}
       />
       {live && (
-        <span className="eva-visage" aria-hidden>
-          <span className="eva-eye eva-eye--l" />
-          <span className="eva-eye eva-eye--r" />
-          <span className="eva-mouth" />
-        </span>
+        <svg
+          className="eva-visage"
+          viewBox="0 0 646 1024"
+          width={size}
+          height={h}
+          aria-hidden
+        >
+          <g className="eva-eyes">
+            <ellipse className="eva-eye" cx="252" cy="210" rx="22" ry="26" />
+            <ellipse className="eva-eye" cx="394" cy="210" rx="22" ry="26" />
+          </g>
+          <path
+            className="eva-mouth"
+            d="M 290 268 Q 323 298 356 268"
+            fill="none"
+            strokeLinecap="round"
+          />
+        </svg>
       )}
     </span>
   );
