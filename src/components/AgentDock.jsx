@@ -4,12 +4,12 @@ import { Send, Sparkles, X } from "lucide-react";
 import { AGENT_PROMPTS, askPortfolioAgent } from "../lib/portfolioAgent";
 import { useSiteContent } from "../site-content";
 
-const POS_KEY = "sps-agent-pos-v3";
-const WIDTH = 118;
-const HEIGHT = 176;
+const POS_KEY = "sps-agent-pos-v4";
+const WIDTH = 128;
+const HEIGHT = 204;
 
 function EvaFace({ size = 96, className = "", live = false }) {
-  const h = Math.round(size * 1.48);
+  const h = Math.round(size * 1.58);
   return (
     <span
       className={`eva-face relative inline-block select-none pointer-events-none ${className}`}
@@ -22,7 +22,7 @@ function EvaFace({ size = 96, className = "", live = false }) {
         height={h}
         draggable={false}
         className="object-contain absolute inset-0 w-full h-full"
-        style={{ background: "transparent" }}
+        style={{ background: "transparent", imageRendering: "auto" }}
       />
       {live && (
         <span className="eva-visage" aria-hidden>
@@ -258,13 +258,12 @@ export default function AgentDock() {
         data-testid="agent-launcher"
         aria-label="Open Eva"
         title="Ask Eva"
-        className={`fixed z-[95] rounded-none bg-transparent border-0 shadow-none flex items-center justify-center cursor-grab active:cursor-grabbing touch-none select-none overflow-visible p-0 eva-float ${dragging ? "is-dragging" : ""}`}
+        className={`fixed z-[95] rounded-none bg-transparent border-0 shadow-none flex items-end justify-center cursor-grab active:cursor-grabbing touch-none select-none overflow-visible p-0 eva-float ${dragging ? "is-dragging" : ""} ${open ? "is-open" : ""}`}
         style={{
           left: pos.x,
           top: pos.y,
           width: WIDTH,
           height: HEIGHT,
-          filter: "drop-shadow(0 14px 28px rgba(0,212,255,0.45))",
         }}
         onPointerDown={(e) => {
           drag.current = {
@@ -283,7 +282,8 @@ export default function AgentDock() {
           setOpen((value) => !value);
         }}
       >
-        <EvaFace size={110} live />
+        <span className="eva-aura" aria-hidden />
+        <EvaFace size={126} live />
       </button>
     </div>
   );
