@@ -116,6 +116,15 @@ export default function AgentDock() {
   }, [open]);
 
   useEffect(() => {
+    if (!open) return undefined;
+    const onKey = (e) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
+  useEffect(() => {
     const onMove = (e) => {
       if (!drag.current.active) return;
       const point = e.touches?.[0] || e;
@@ -168,46 +177,47 @@ export default function AgentDock() {
     }
   };
 
-  const panelLeft = Math.min(Math.max(12, pos.x - 240), window.innerWidth - 360);
-  const panelTop = Math.min(Math.max(12, pos.y - 20), window.innerHeight - 440);
-
   return (
     <div className="agent-dock" data-testid="agent-dock">
       {open && (
         <div
-          className="fixed z-[90] w-[min(360px,calc(100vw-24px))] h-[min(440px,70vh)] glass rounded-[1.4rem] border border-neon/25 overflow-hidden shadow-[0_0_50px_rgba(0,240,255,0.18)] flex flex-col"
-          style={{ left: panelLeft, top: panelTop }}
+          className="eva-panel fixed z-[96] right-3 bottom-3 sm:right-5 sm:bottom-5 w-[min(380px,calc(100vw-24px))] h-[min(520px,78vh)] flex flex-col overflow-hidden"
           data-testid="agent-panel"
         >
-          <div className="flex items-center gap-3 px-3.5 py-3 border-b border-white/10 bg-white/5">
-            <span className="w-11 h-11 rounded-2xl bg-transparent flex items-center justify-center overflow-visible">
-              <EvaFace size={40} />
+          <div className="eva-panel__glow" aria-hidden />
+
+          <div className="relative flex items-center gap-3 px-4 py-3.5 border-b border-white/10 bg-gradient-to-r from-cyan-500/10 via-transparent to-violet-500/10">
+            <span className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-visible rounded-2xl bg-ink/50 ring-1 ring-neon/30">
+              <EvaFace size={34} live />
+              <span className="absolute bottom-1 right-1 h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)]" />
             </span>
             <div className="min-w-0 flex-1">
-              <p className="font-display font-bold text-white text-sm flex items-center gap-1.5">
+              <p className="font-display font-bold text-white text-[15px] flex items-center gap-1.5 leading-none">
                 Eva
-                <Sparkles size={13} className="text-viol" />
+                <Sparkles size={14} className="text-neon" />
               </p>
-              <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-emerald-400">AI assistant · online</p>
+              <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.18em] text-emerald-400/90">
+                Online · ready to help
+              </p>
             </div>
             <button
               type="button"
               aria-label="Close Eva"
-              className="rounded-lg border border-white/10 p-1.5 text-slate-300 hover:text-neon t-fast"
+              className="rounded-xl border border-white/10 bg-white/5 p-2 text-slate-300 hover:border-neon/40 hover:text-neon t-fast"
               onClick={() => setOpen(false)}
             >
               <X size={16} />
             </button>
           </div>
 
-          <div className="flex-1 overflow-y-auto px-3 py-3 space-y-2.5" data-testid="hero-agent-messages">
+          <div className="relative flex-1 overflow-y-auto px-3.5 py-3.5 space-y-3" data-testid="hero-agent-messages">
             {messages.map((msg, index) => (
               <div key={`${msg.role}-${index}`} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
                 <div
-                  className={`max-w-[92%] rounded-2xl px-3 py-2 text-[13px] leading-relaxed whitespace-pre-wrap ${
+                  className={`max-w-[88%] px-3.5 py-2.5 text-[13px] leading-relaxed whitespace-pre-wrap ${
                     msg.role === "user"
-                      ? "bg-neon text-ink rounded-br-md"
-                      : "bg-white/5 border border-white/10 text-slate-200 rounded-bl-md"
+                      ? "rounded-2xl rounded-br-md bg-neon text-ink shadow-[0_0_20px_rgba(0,240,255,0.2)]"
+                      : "rounded-2xl rounded-bl-md border border-white/10 bg-white/[0.06] text-slate-200"
                   }`}
                 >
                   {msg.text}
@@ -216,22 +226,24 @@ export default function AgentDock() {
             ))}
             {busy && (
               <div className="flex justify-start">
-                <div className="rounded-2xl rounded-bl-md px-3 py-2 bg-white/5 border border-white/10 text-slate-400 text-sm font-mono">
-                  thinking…
+                <div className="rounded-2xl rounded-bl-md border border-white/10 bg-white/[0.06] px-3.5 py-2.5 text-slate-400 text-sm font-mono flex items-center gap-1.5">
+                  <span className="eva-typing-dot" />
+                  <span className="eva-typing-dot" />
+                  <span className="eva-typing-dot" />
                 </div>
               </div>
             )}
             <div ref={endRef} />
           </div>
 
-          <div className="px-2.5 pb-2 flex flex-wrap gap-1.5">
+          <div className="relative px-3 pb-2 flex flex-wrap gap-1.5">
             {AGENT_PROMPTS.slice(0, 3).map((prompt) => (
               <button
                 key={prompt}
                 type="button"
                 disabled={busy}
                 onClick={() => ask(prompt)}
-                className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.1em] text-slate-300 hover:border-neon/40 hover:text-neon t-fast disabled:opacity-50"
+                className="rounded-full border border-neon/20 bg-neon/5 px-3 py-1.5 font-mono text-[10px] tracking-wide text-slate-300 hover:border-neon/50 hover:bg-neon/10 hover:text-neon t-fast disabled:opacity-50"
               >
                 {prompt}
               </button>
@@ -239,7 +251,7 @@ export default function AgentDock() {
           </div>
 
           <form
-            className="p-2.5 border-t border-white/10 flex gap-2"
+            className="relative m-3 mt-1 flex gap-2 rounded-2xl border border-white/10 bg-ink/70 p-1.5 shadow-[inset_0_0_0_1px_rgba(0,240,255,0.06)]"
             onSubmit={(e) => {
               e.preventDefault();
               ask(input);
@@ -252,12 +264,12 @@ export default function AgentDock() {
               placeholder={`Ask about ${first}…`}
               disabled={busy}
               data-testid="hero-agent-input"
-              className="flex-1 min-w-0 rounded-xl bg-ink/60 border border-white/10 px-3 py-2.5 text-sm text-white placeholder:text-slate-500 outline-none focus:border-neon/40"
+              className="flex-1 min-w-0 rounded-xl bg-transparent px-3 py-2.5 text-sm text-white placeholder:text-slate-500 outline-none"
             />
             <button
               type="submit"
               disabled={busy || !input.trim()}
-              className="shrink-0 rounded-xl bg-neon text-ink px-3 py-2.5 disabled:opacity-50 t-fast"
+              className="shrink-0 rounded-xl bg-neon text-ink px-3.5 py-2.5 disabled:opacity-40 hover:brightness-110 t-fast"
               aria-label="Send"
             >
               <Send size={16} />
@@ -266,38 +278,40 @@ export default function AgentDock() {
         </div>
       )}
 
-      <button
-        type="button"
-        data-testid="agent-launcher"
-        aria-label="Open Eva"
-        title="Ask Eva"
-        className={`fixed z-[95] rounded-none bg-transparent border-0 shadow-none flex items-end justify-center cursor-grab active:cursor-grabbing touch-none select-none overflow-visible p-0 eva-float ${dragging ? "is-dragging" : ""} ${open ? "is-open" : ""}`}
-        style={{
-          left: pos.x,
-          top: pos.y,
-          width: WIDTH,
-          height: HEIGHT,
-        }}
-        onPointerDown={(e) => {
-          drag.current = {
-            active: true,
-            moved: false,
-            ox: e.clientX - pos.x,
-            oy: e.clientY - pos.y,
-            startX: e.clientX,
-            startY: e.clientY,
-          };
-          setDragging(true);
-          e.currentTarget.setPointerCapture?.(e.pointerId);
-        }}
-        onClick={() => {
-          if (drag.current.moved) return;
-          setOpen((value) => !value);
-        }}
-      >
-        <span className="eva-aura" aria-hidden />
-        <EvaFace size={88} live />
-      </button>
+      {!open && (
+        <button
+          type="button"
+          data-testid="agent-launcher"
+          aria-label="Open Eva"
+          title="Ask Eva"
+          className={`fixed z-[95] rounded-none bg-transparent border-0 shadow-none flex items-end justify-center cursor-grab active:cursor-grabbing touch-none select-none overflow-visible p-0 eva-float ${dragging ? "is-dragging" : ""}`}
+          style={{
+            left: pos.x,
+            top: pos.y,
+            width: WIDTH,
+            height: HEIGHT,
+          }}
+          onPointerDown={(e) => {
+            drag.current = {
+              active: true,
+              moved: false,
+              ox: e.clientX - pos.x,
+              oy: e.clientY - pos.y,
+              startX: e.clientX,
+              startY: e.clientY,
+            };
+            setDragging(true);
+            e.currentTarget.setPointerCapture?.(e.pointerId);
+          }}
+          onClick={() => {
+            if (drag.current.moved) return;
+            setOpen(true);
+          }}
+        >
+          <span className="eva-aura" aria-hidden />
+          <EvaFace size={88} live />
+        </button>
+      )}
     </div>
   );
 }
