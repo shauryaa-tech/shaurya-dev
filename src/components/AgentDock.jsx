@@ -4,22 +4,34 @@ import { Send, Sparkles, X } from "lucide-react";
 import { AGENT_PROMPTS, askPortfolioAgent } from "../lib/portfolioAgent";
 import { useSiteContent } from "../site-content";
 
-const POS_KEY = "sps-agent-pos-v2";
+const POS_KEY = "sps-agent-pos-v3";
 const WIDTH = 118;
 const HEIGHT = 176;
 
-function EvaFace({ size = 96, className = "" }) {
+function EvaFace({ size = 96, className = "", live = false }) {
   const h = Math.round(size * 1.48);
   return (
-    <img
-      src="/eva-icon.png"
-      alt="Eva"
-      width={size}
-      height={h}
-      draggable={false}
-      className={`object-contain select-none pointer-events-none ${className}`}
-      style={{ width: size, height: h, background: "transparent" }}
-    />
+    <span
+      className={`eva-face relative inline-block select-none pointer-events-none ${className}`}
+      style={{ width: size, height: h }}
+    >
+      <img
+        src="/eva-icon.png"
+        alt="Eva"
+        width={size}
+        height={h}
+        draggable={false}
+        className="object-contain absolute inset-0 w-full h-full"
+        style={{ background: "transparent" }}
+      />
+      {live && (
+        <span className="eva-visage" aria-hidden>
+          <span className="eva-eye eva-eye--l" />
+          <span className="eva-eye eva-eye--r" />
+          <span className="eva-mouth" />
+        </span>
+      )}
+    </span>
   );
 }
 
@@ -45,7 +57,7 @@ function clampPos(x, y) {
 }
 
 function defaultSidePos() {
-  return clampPos(window.innerWidth - WIDTH - 18, Math.round(window.innerHeight * 0.38));
+  return clampPos(window.innerWidth - WIDTH - 16, window.innerHeight - HEIGHT - 28);
 }
 
 export default function AgentDock() {
@@ -271,7 +283,7 @@ export default function AgentDock() {
           setOpen((value) => !value);
         }}
       >
-        <EvaFace size={110} />
+        <EvaFace size={110} live />
       </button>
     </div>
   );

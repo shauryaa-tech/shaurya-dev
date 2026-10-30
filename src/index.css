@@ -2145,7 +2145,7 @@ body::after {
     transform: translateY(0) rotate(-2deg);
   }
   50% {
-    transform: translateY(-14px) rotate(2deg);
+    transform: translateY(-10px) rotate(2deg);
   }
 }
 .eva-float {
@@ -2154,6 +2154,121 @@ body::after {
 }
 .eva-float.is-dragging {
   animation: none;
+}
+
+.eva-face {
+  isolation: isolate;
+}
+
+.eva-visage {
+  position: absolute;
+  left: 28%;
+  top: 22%;
+  width: 44%;
+  height: 22%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.eva-eye {
+  position: absolute;
+  top: 28%;
+  width: 18%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #eaffff 0%, #5cf6ff 35%, #00c8ff 75%, #0077aa 100%);
+  box-shadow:
+    0 0 6px rgba(0, 230, 255, 0.95),
+    0 0 14px rgba(0, 200, 255, 0.55);
+  animation:
+    eva-blink 4.6s ease-in-out infinite,
+    eva-glance 5.8s ease-in-out infinite;
+}
+
+.eva-eye--l {
+  left: 18%;
+  animation-delay: 0s, 0s;
+}
+
+.eva-eye--r {
+  right: 18%;
+  left: auto;
+  animation-delay: 0.08s, 0s;
+}
+
+.eva-mouth {
+  position: absolute;
+  left: 50%;
+  bottom: 8%;
+  width: 34%;
+  height: 28%;
+  border: 2.5px solid transparent;
+  border-bottom-color: #5ef8ff;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 4px 10px rgba(0, 220, 255, 0.35);
+  animation: eva-talk 2.8s ease-in-out infinite;
+  filter: drop-shadow(0 0 4px rgba(0, 230, 255, 0.85));
+}
+
+@keyframes eva-blink {
+  0%,
+  42%,
+  48%,
+  100% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  45% {
+    transform: scaleY(0.12);
+    opacity: 0.75;
+  }
+}
+
+@keyframes eva-glance {
+  0%,
+  20%,
+  100% {
+    translate: 0 0;
+  }
+  28% {
+    translate: 2px 0;
+  }
+  36% {
+    translate: -2px 1px;
+  }
+  44%,
+  70% {
+    translate: 0 0;
+  }
+}
+
+@keyframes eva-talk {
+  0%,
+  100% {
+    width: 30%;
+    height: 22%;
+    border-bottom-width: 2px;
+    opacity: 0.9;
+  }
+  35% {
+    width: 38%;
+    height: 34%;
+    border-bottom-width: 3px;
+    opacity: 1;
+  }
+  55% {
+    width: 28%;
+    height: 18%;
+    border-bottom-width: 2px;
+    opacity: 0.85;
+  }
+  75% {
+    width: 36%;
+    height: 30%;
+    border-bottom-width: 2.5px;
+    opacity: 1;
+  }
 }
 
 .hero-orbit {
