@@ -286,8 +286,18 @@ export default function AgentDock() {
           className="eva-launcher"
           onClick={() => setOpen(true)}
         >
-          <span className="eva-launcher__halo" aria-hidden />
+          <span className="eva-launcher__aura" aria-hidden />
+          <span className="eva-launcher__orbit" aria-hidden />
+          <span className="eva-launcher__orbit eva-launcher__orbit--slow" aria-hidden />
+          <span className="eva-launcher__stage" aria-hidden />
+          <span className="eva-launcher__spark eva-launcher__spark--1" aria-hidden />
+          <span className="eva-launcher__spark eva-launcher__spark--2" aria-hidden />
+          <span className="eva-launcher__spark eva-launcher__spark--3" aria-hidden />
           <EvaLauncherIcon />
+          <span className="eva-launcher__tip">
+            <span className="eva-launcher__tip-dot" />
+            Ask Eva
+          </span>
         </button>
       )}
     </div>
