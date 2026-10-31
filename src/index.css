@@ -2551,6 +2551,7 @@ body::after {
 .eva-panel__prompts {
   position: relative;
   z-index: 1;
+  flex-shrink: 0;
   padding: 0 16px 10px;
 }
 
@@ -2595,6 +2596,7 @@ body::after {
 .eva-panel__composer {
   position: relative;
   z-index: 1;
+  flex-shrink: 0;
   margin: 4px 14px 14px;
   display: flex;
   align-items: center;
