@@ -2140,6 +2140,10 @@ body::after {
 }
 
 .eva-launcher {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 95;
   width: 68px;
   height: 68px;
   border: 0;
@@ -2149,6 +2153,13 @@ body::after {
   display: grid;
   place-items: center;
   animation: eva-float 3.4s ease-in-out infinite;
+}
+
+@media (min-width: 640px) {
+  .eva-launcher {
+    right: 22px;
+    bottom: 22px;
+  }
 }
 
 .eva-launcher__ring {
@@ -2249,6 +2260,15 @@ body::after {
 }
 
 .eva-panel {
+  position: fixed;
+  right: 12px;
+  bottom: 12px;
+  z-index: 96;
+  width: min(380px, calc(100vw - 24px));
+  height: min(520px, 78vh);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   border-radius: 1.35rem;
   border: 1px solid rgba(0, 240, 255, 0.28);
   background:
@@ -2260,6 +2280,13 @@ body::after {
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   animation: eva-panel-in 0.28s ease-out;
+}
+
+@media (min-width: 640px) {
+  .eva-panel {
+    right: 20px;
+    bottom: 20px;
+  }
 }
 
 .eva-panel__glow {

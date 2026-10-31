@@ -118,10 +118,7 @@ export default function AgentDock() {
   return (
     <div className="agent-dock" data-testid="agent-dock">
       {open && (
-        <div
-          className="eva-panel fixed z-[96] right-3 bottom-3 sm:right-5 sm:bottom-5 w-[min(380px,calc(100vw-24px))] h-[min(520px,78vh)] flex flex-col overflow-hidden"
-          data-testid="agent-panel"
-        >
+        <div className="eva-panel" data-testid="agent-panel">
           <div className="eva-panel__glow" aria-hidden />
 
           <div className="relative flex items-center gap-3 px-4 py-3.5 border-b border-white/10 bg-gradient-to-r from-cyan-500/10 via-transparent to-violet-500/10">
@@ -222,7 +219,7 @@ export default function AgentDock() {
           data-testid="agent-launcher"
           aria-label="Open Eva chatbot"
           title="Chat with Eva"
-          className="eva-launcher fixed z-[95] right-3 bottom-3 sm:right-5 sm:bottom-5"
+          className="eva-launcher"
           onClick={() => setOpen(true)}
         >
           <span className="eva-launcher__ring" aria-hidden />
