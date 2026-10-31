@@ -22,42 +22,92 @@ function EvaMark({ size = 28 }) {
 
 function EvaLauncherIcon() {
   return (
-    <svg className="eva-launcher__art" viewBox="0 0 72 72" width="54" height="54" aria-hidden>
+    <svg className="eva-launcher__art" viewBox="0 0 96 96" width="68" height="68" aria-hidden>
       <defs>
-        <linearGradient id="evaFabBg" x1="10" y1="6" x2="62" y2="66" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#10253f" />
-          <stop offset="0.55" stopColor="#0a1628" />
-          <stop offset="1" stopColor="#07101c" />
+        <linearGradient id="evaBotShell" x1="18" y1="10" x2="78" y2="86" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#f4fbff" />
+          <stop offset="0.45" stopColor="#d7eef8" />
+          <stop offset="1" stopColor="#8ec8e0" />
         </linearGradient>
-        <linearGradient id="evaFabRing" x1="8" y1="8" x2="64" y2="64" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#9af8ff" />
-          <stop offset="0.5" stopColor="#00e4ff" />
-          <stop offset="1" stopColor="#3a7dff" />
+        <linearGradient id="evaBotBlue" x1="28" y1="48" x2="68" y2="88" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#5ef0ff" />
+          <stop offset="1" stopColor="#1e8fff" />
         </linearGradient>
-        <linearGradient id="evaFabFace" x1="22" y1="20" x2="50" y2="48" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#e8feff" />
-          <stop offset="1" stopColor="#7af0ff" />
-        </linearGradient>
-        <filter id="evaFabGlow" x="-30%" y="-30%" width="160%" height="160%">
-          <feDropShadow dx="0" dy="2" stdDeviation="2.2" floodColor="#00e5ff" floodOpacity="0.45" />
+        <radialGradient id="evaBotEye" cx="35%" cy="35%" r="65%">
+          <stop stopColor="#ffffff" />
+          <stop offset="0.35" stopColor="#7af8ff" />
+          <stop offset="1" stopColor="#00a8ff" />
+        </radialGradient>
+        <filter id="evaBotGlow" x="-40%" y="-40%" width="180%" height="180%">
+          <feDropShadow dx="0" dy="3" stdDeviation="2.5" floodColor="#00d9ff" floodOpacity="0.5" />
         </filter>
       </defs>
 
-      <circle cx="36" cy="36" r="33" fill="url(#evaFabRing)" opacity="0.22" className="eva-launcher__pulse" />
-      <circle cx="36" cy="36" r="28.5" fill="url(#evaFabBg)" stroke="url(#evaFabRing)" strokeWidth="1.6" />
-      <circle cx="36" cy="36" r="28.5" fill="url(#evaFabRing)" opacity="0.08" />
+      <ellipse className="eva-bot__shadow" cx="48" cy="88" rx="20" ry="4" fill="#00d4ff" opacity="0.28" />
 
-      <g filter="url(#evaFabGlow)">
-        <rect x="21" y="19" width="30" height="26" rx="13" fill="url(#evaFabFace)" />
-        <path d="M30 45.5 L36 52 L42 45.5" fill="url(#evaFabFace)" />
-        <circle className="eva-launcher__eye" cx="30.5" cy="31" r="2.4" fill="#062033" />
-        <circle className="eva-launcher__eye" cx="41.5" cy="31" r="2.4" fill="#062033" />
-        <path d="M31.5 37.2c1.5 1.7 7.5 1.7 9 0" stroke="#062033" strokeWidth="1.8" strokeLinecap="round" fill="none" />
+      <g filter="url(#evaBotGlow)">
+        {/* ears */}
+        <circle cx="18" cy="40" r="9" fill="url(#evaBotShell)" stroke="#7adfff" strokeWidth="1.5" />
+        <circle cx="18" cy="40" r="4.2" fill="#00c8ff" className="eva-bot__ear-light" />
+        <circle cx="78" cy="40" r="9" fill="url(#evaBotShell)" stroke="#7adfff" strokeWidth="1.5" />
+        <circle cx="78" cy="40" r="4.2" fill="#00c8ff" className="eva-bot__ear-light" />
+
+        {/* head */}
+        <circle cx="48" cy="40" r="26" fill="url(#evaBotShell)" />
+        <path d="M34 18c4-3 24-3 28 0" stroke="#5ad8ff" strokeWidth="3.5" strokeLinecap="round" />
+
+        {/* visor */}
+        <rect x="30" y="28" width="36" height="24" rx="12" fill="#071018" />
+
+        {/* eyes — glance + blink */}
+        <g className="eva-bot__eyes">
+          <g className="eva-bot__eye">
+            <ellipse cx="39" cy="38" rx="5.2" ry="5.8" fill="url(#evaBotEye)" />
+            <circle className="eva-bot__pupil" cx="40" cy="38.5" r="1.7" fill="#041018" />
+          </g>
+          <g className="eva-bot__eye">
+            <ellipse cx="57" cy="38" rx="5.2" ry="5.8" fill="url(#evaBotEye)" />
+            <circle className="eva-bot__pupil" cx="58" cy="38.5" r="1.7" fill="#041018" />
+          </g>
+        </g>
+
+        {/* mouth — smile ↔ sad */}
+        <path
+          className="eva-bot__mouth"
+          d="M40 46.5 C43 50.5, 53 50.5, 56 46.5"
+          fill="none"
+          stroke="#5ef8ff"
+          strokeWidth="2.4"
+          strokeLinecap="round"
+        >
+          <animate
+            attributeName="d"
+            dur="7s"
+            repeatCount="indefinite"
+            values="
+              M40 46.5 C43 50.5, 53 50.5, 56 46.5;
+              M40 46.5 C43 50.5, 53 50.5, 56 46.5;
+              M40 48 C44 48, 52 48, 56 48;
+              M40 49.5 C43 45.5, 53 45.5, 56 49.5;
+              M40 49.5 C43 45.5, 53 45.5, 56 49.5;
+              M40 48 C44 48, 52 48, 56 48;
+              M40 46.5 C43 50.5, 53 50.5, 56 46.5
+            "
+          />
+        </path>
+
+        {/* body */}
+        <path
+          d="M34 62c0-3 5-5 14-5s14 2 14 5v10c0 6-5.5 10-14 10s-14-4-14-10V62z"
+          fill="url(#evaBotBlue)"
+        />
+        <path d="M36 72c2 8 22 8 24 0v8c-2 5-8 8-12 8s-10-3-12-8v-8z" fill="#eef8fc" />
+        <circle cx="48" cy="68" r="3.2" fill="#062033" stroke="#9af8ff" strokeWidth="1.4" />
+
+        {/* arms */}
+        <path d="M30 68c-4 2-6 5-5 8" stroke="#dff7ff" strokeWidth="4.5" strokeLinecap="round" />
+        <path d="M66 68c4 2 6 5 5 8" stroke="#dff7ff" strokeWidth="4.5" strokeLinecap="round" />
       </g>
-
-      <circle cx="52" cy="20" r="5" fill="#0b1524" />
-      <circle cx="52" cy="20" r="3.2" fill="#34d399" className="eva-launcher__live" />
-      <path d="M17 18l1.2 2.8L21 22l-2.8 1.2L17 26l-1.2-2.8L13 22l2.8-1.2L17 18z" fill="#9af8ff" opacity="0.9" />
     </svg>
   );
 }
@@ -208,6 +258,7 @@ export default function AgentDock() {
           className="eva-launcher"
           onClick={() => setOpen(true)}
         >
+          <span className="eva-launcher__halo" aria-hidden />
           <EvaLauncherIcon />
         </button>
       )}
