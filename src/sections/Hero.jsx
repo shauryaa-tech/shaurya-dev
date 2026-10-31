@@ -1,7 +1,7 @@
 import { Download, ArrowDown } from "lucide-react";
 import { KineticLine, Reveal } from "../components/Kinetic";
 import { scrollToId } from "../components/Nav";
-import HeroGalaxy from "../components/HeroGalaxy";
+import HeroOrbit3D from "../components/HeroOrbit3D";
 import { useSiteContent } from "../site-content";
 
 export default function Hero() {
@@ -99,7 +99,7 @@ export default function Hero() {
           </div>
 
           <Reveal delay={0.35} className="hero-bot-wrap items-center justify-center">
-            <HeroGalaxy />
+            <HeroOrbit3D />
           </Reveal>
         </div>
       </div>
