@@ -4,73 +4,59 @@ import { Send, Sparkles, X } from "lucide-react";
 import { AGENT_PROMPTS, askPortfolioAgent } from "../lib/portfolioAgent";
 import { useSiteContent } from "../site-content";
 
-const POS_KEY = "sps-agent-pos-v5";
-const WIDTH = 92;
-const HEIGHT = 146;
-
-function EvaFace({ size = 96, className = "", live = false }) {
-  const h = Math.round(size * 1.58);
+function EvaIcon({ size = 56, className = "" }) {
   return (
-    <span
-      className={`eva-face relative inline-block select-none pointer-events-none ${className}`}
-      style={{ width: size, height: h }}
+    <svg
+      className={className}
+      width={size}
+      height={size}
+      viewBox="0 0 80 80"
+      fill="none"
+      aria-hidden
     >
-      <img
-        src="/eva-icon.png"
-        alt="Eva"
-        width={size}
-        height={h}
-        draggable={false}
-        className="absolute inset-0 h-full w-full object-fill"
-        style={{ background: "transparent" }}
-      />
-      {live && (
-        <svg
-          className="eva-visage"
-          viewBox="0 0 646 1024"
-          width={size}
-          height={h}
-          aria-hidden
-        >
-          <g className="eva-eyes">
-            <ellipse className="eva-eye" cx="252" cy="210" rx="22" ry="26" />
-            <ellipse className="eva-eye" cx="394" cy="210" rx="22" ry="26" />
-          </g>
-          <path
-            className="eva-mouth"
-            d="M 290 268 Q 323 298 356 268"
-            fill="none"
-            strokeLinecap="round"
-          />
-        </svg>
-      )}
-    </span>
+      <defs>
+        <linearGradient id="evaBody" x1="18" y1="8" x2="62" y2="72" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#e8fbff" />
+          <stop offset="0.45" stopColor="#9ae7ff" />
+          <stop offset="1" stopColor="#3dd0ff" />
+        </linearGradient>
+        <linearGradient id="evaShell" x1="20" y1="12" x2="60" y2="58" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#ffffff" />
+          <stop offset="1" stopColor="#c5f4ff" />
+        </linearGradient>
+        <filter id="evaSoft" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="0" dy="4" stdDeviation="3" floodColor="#00e5ff" floodOpacity="0.35" />
+        </filter>
+      </defs>
+
+      <ellipse cx="40" cy="72" rx="18" ry="4" fill="#00d4ff" opacity="0.28" className="eva-icon-shadow" />
+
+      <g filter="url(#evaSoft)">
+        <path
+          d="M28 48c0-2.5 2.4-4.5 12-4.5s12 2 12 4.5v10.5c0 5.2-4.8 9-12 9s-12-3.8-12-9V48z"
+          fill="url(#evaBody)"
+        />
+        <circle cx="40" cy="34" r="18" fill="url(#evaShell)" />
+        <rect x="27" y="26" width="26" height="16" rx="8" fill="#0a1220" />
+        <circle className="eva-icon-eye" cx="34.5" cy="33.5" r="2.6" fill="#5ef8ff" />
+        <circle className="eva-icon-eye" cx="45.5" cy="33.5" r="2.6" fill="#5ef8ff" />
+        <path
+          className="eva-icon-mouth"
+          d="M36 39.5c1.4 1.6 6.6 1.6 8 0"
+          stroke="#5ef8ff"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+        />
+        <circle cx="22" cy="34" r="4.2" fill="#7aefff" />
+        <circle cx="58" cy="34" r="4.2" fill="#7aefff" />
+        <circle cx="22" cy="34" r="2" fill="#00b8e6" />
+        <circle cx="58" cy="34" r="2" fill="#00b8e6" />
+        <circle cx="40" cy="52.5" r="2.4" fill="#062033" stroke="#5ef8ff" strokeWidth="1.2" />
+        <path d="M24 56c1.2 2.2 2.2 3.2 0 5" stroke="#dff9ff" strokeWidth="3.2" strokeLinecap="round" />
+        <path d="M56 56c-1.2 2.2-2.2 3.2 0 5" stroke="#dff9ff" strokeWidth="3.2" strokeLinecap="round" />
+      </g>
+    </svg>
   );
-}
-
-function loadPos() {
-  try {
-    const raw = localStorage.getItem(POS_KEY);
-    if (!raw) return null;
-    const parsed = JSON.parse(raw);
-    if (typeof parsed?.x === "number" && typeof parsed?.y === "number") return parsed;
-  } catch {
-    // ignore
-  }
-  return null;
-}
-
-function clampPos(x, y) {
-  const maxX = Math.max(12, window.innerWidth - WIDTH - 12);
-  const maxY = Math.max(12, window.innerHeight - HEIGHT - 12);
-  return {
-    x: Math.min(maxX, Math.max(12, x)),
-    y: Math.min(maxY, Math.max(12, y)),
-  };
-}
-
-function defaultSidePos() {
-  return clampPos(window.innerWidth - WIDTH - 16, window.innerHeight - HEIGHT - 28);
 }
 
 export default function AgentDock() {
@@ -79,84 +65,36 @@ export default function AgentDock() {
   const first = site.profile?.firstName || "Shaurya";
   const hidden = pathname.startsWith("/admin") || pathname.startsWith("/login");
 
-  const [pos, setPos] = useState(() => ({ x: 0, y: 0 }));
-  const [ready, setReady] = useState(false);
   const [open, setOpen] = useState(false);
-  const [dragging, setDragging] = useState(false);
   const [messages, setMessages] = useState([
     {
       role: "agent",
-      text: `Hi — I'm Eva, ${first}'s AI assistant. Ask about his projects, skills, experience, or how to contact him.`,
+      text: `Hi — I'm Eva, ${first}'s AI assistant. Ask about projects, skills, experience, or how to get in touch.`,
     },
   ]);
   const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
   const endRef = useRef(null);
-  const drag = useRef({ active: false, moved: false, ox: 0, oy: 0, startX: 0, startY: 0 });
   const inputRef = useRef(null);
-
-  useEffect(() => {
-    const saved = loadPos();
-    setPos(saved ? clampPos(saved.x, saved.y) : defaultSidePos());
-    setReady(true);
-    const onResize = () => setPos((current) => clampPos(current.x, current.y));
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, []);
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }, [messages, busy, open]);
 
   useEffect(() => {
-    if (open) {
-      const t = setTimeout(() => inputRef.current?.focus(), 120);
-      return () => clearTimeout(t);
-    }
-  }, [open]);
-
-  useEffect(() => {
     if (!open) return undefined;
+    const t = setTimeout(() => inputRef.current?.focus(), 120);
     const onKey = (e) => {
       if (e.key === "Escape") setOpen(false);
     };
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    return () => {
+      clearTimeout(t);
+      window.removeEventListener("keydown", onKey);
+    };
   }, [open]);
 
-  useEffect(() => {
-    const onMove = (e) => {
-      if (!drag.current.active) return;
-      const point = e.touches?.[0] || e;
-      const next = clampPos(point.clientX - drag.current.ox, point.clientY - drag.current.oy);
-      if (Math.hypot(point.clientX - drag.current.startX, point.clientY - drag.current.startY) > 6) {
-        drag.current.moved = true;
-      }
-      setPos(next);
-    };
-    const onUp = () => {
-      if (!drag.current.active) return;
-      drag.current.active = false;
-      setDragging(false);
-      setPos((current) => {
-        const next = clampPos(current.x, current.y);
-        localStorage.setItem(POS_KEY, JSON.stringify(next));
-        return next;
-      });
-    };
-    window.addEventListener("pointermove", onMove);
-    window.addEventListener("pointerup", onUp);
-    window.addEventListener("touchmove", onMove, { passive: false });
-    window.addEventListener("touchend", onUp);
-    return () => {
-      window.removeEventListener("pointermove", onMove);
-      window.removeEventListener("pointerup", onUp);
-      window.removeEventListener("touchmove", onMove);
-      window.removeEventListener("touchend", onUp);
-    };
-  }, []);
-
-  if (hidden || !ready) return null;
+  if (hidden) return null;
 
   const ask = async (question) => {
     const q = String(question || "").trim();
@@ -187,9 +125,9 @@ export default function AgentDock() {
           <div className="eva-panel__glow" aria-hidden />
 
           <div className="relative flex items-center gap-3 px-4 py-3.5 border-b border-white/10 bg-gradient-to-r from-cyan-500/10 via-transparent to-violet-500/10">
-            <span className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-visible rounded-2xl bg-ink/50 ring-1 ring-neon/30">
-              <EvaFace size={34} live />
-              <span className="absolute bottom-1 right-1 h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)]" />
+            <span className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-ink/60 ring-1 ring-neon/30 overflow-hidden">
+              <EvaIcon size={40} />
+              <span className="absolute bottom-1.5 right-1.5 h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)]" />
             </span>
             <div className="min-w-0 flex-1">
               <p className="font-display font-bold text-white text-[15px] flex items-center gap-1.5 leading-none">
@@ -226,7 +164,7 @@ export default function AgentDock() {
             ))}
             {busy && (
               <div className="flex justify-start">
-                <div className="rounded-2xl rounded-bl-md border border-white/10 bg-white/[0.06] px-3.5 py-2.5 text-slate-400 text-sm font-mono flex items-center gap-1.5">
+                <div className="rounded-2xl rounded-bl-md border border-white/10 bg-white/[0.06] px-3.5 py-2.5 flex items-center gap-1.5">
                   <span className="eva-typing-dot" />
                   <span className="eva-typing-dot" />
                   <span className="eva-typing-dot" />
@@ -282,34 +220,15 @@ export default function AgentDock() {
         <button
           type="button"
           data-testid="agent-launcher"
-          aria-label="Open Eva"
-          title="Ask Eva"
-          className={`fixed z-[95] rounded-none bg-transparent border-0 shadow-none flex items-end justify-center cursor-grab active:cursor-grabbing touch-none select-none overflow-visible p-0 eva-float ${dragging ? "is-dragging" : ""}`}
-          style={{
-            left: pos.x,
-            top: pos.y,
-            width: WIDTH,
-            height: HEIGHT,
-          }}
-          onPointerDown={(e) => {
-            drag.current = {
-              active: true,
-              moved: false,
-              ox: e.clientX - pos.x,
-              oy: e.clientY - pos.y,
-              startX: e.clientX,
-              startY: e.clientY,
-            };
-            setDragging(true);
-            e.currentTarget.setPointerCapture?.(e.pointerId);
-          }}
-          onClick={() => {
-            if (drag.current.moved) return;
-            setOpen(true);
-          }}
+          aria-label="Open Eva chatbot"
+          title="Chat with Eva"
+          className="eva-launcher fixed z-[95] right-3 bottom-3 sm:right-5 sm:bottom-5"
+          onClick={() => setOpen(true)}
         >
-          <span className="eva-aura" aria-hidden />
-          <EvaFace size={88} live />
+          <span className="eva-launcher__ring" aria-hidden />
+          <span className="eva-launcher__core">
+            <EvaIcon size={54} />
+          </span>
         </button>
       )}
     </div>
