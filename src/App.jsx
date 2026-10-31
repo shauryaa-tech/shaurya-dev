@@ -65,7 +65,11 @@ function Tracker() {
 
 export default function App() {
   useEffect(() => {
-    const lenis = new Lenis({ duration: 1.15, smoothWheel: true });
+    const lenis = new Lenis({
+      duration: 1.15,
+      smoothWheel: true,
+      prevent: (node) => !!node?.closest?.("[data-lenis-prevent]"),
+    });
     window.__lenis = lenis;
     let raf;
     const loop = (t) => {

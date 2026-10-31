@@ -129,6 +129,8 @@ export default function AgentDock() {
   const [busy, setBusy] = useState(false);
   const endRef = useRef(null);
   const inputRef = useRef(null);
+  const messagesRef = useRef(null);
+  const panelRef = useRef(null);
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
@@ -141,9 +143,23 @@ export default function AgentDock() {
       if (e.key === "Escape") setOpen(false);
     };
     window.addEventListener("keydown", onKey);
+
+    const panel = panelRef.current;
+    const stopPageScroll = (e) => {
+      e.stopPropagation();
+    };
+    panel?.addEventListener("wheel", stopPageScroll, { passive: true });
+    panel?.addEventListener("touchmove", stopPageScroll, { passive: true });
+
+    const lenis = window.__lenis;
+    lenis?.stop?.();
+
     return () => {
       clearTimeout(t);
       window.removeEventListener("keydown", onKey);
+      panel?.removeEventListener("wheel", stopPageScroll);
+      panel?.removeEventListener("touchmove", stopPageScroll);
+      lenis?.start?.();
     };
   }, [open]);
 
@@ -173,7 +189,13 @@ export default function AgentDock() {
   return (
     <div className="agent-dock" data-testid="agent-dock">
       {open && (
-        <div className="eva-panel" data-testid="agent-panel">
+        <div
+          ref={panelRef}
+          className="eva-panel"
+          data-testid="agent-panel"
+          data-lenis-prevent
+          onWheel={(e) => e.stopPropagation()}
+        >
           <div className="eva-panel__shine" aria-hidden />
 
           <header className="eva-panel__head">
@@ -193,7 +215,13 @@ export default function AgentDock() {
             </button>
           </header>
 
-          <div className="eva-panel__messages" data-testid="hero-agent-messages">
+          <div
+            ref={messagesRef}
+            className="eva-panel__messages"
+            data-testid="hero-agent-messages"
+            data-lenis-prevent
+            onWheel={(e) => e.stopPropagation()}
+          >
             {messages.map((msg, index) => (
               <div key={`${msg.role}-${index}`} className={`eva-row ${msg.role === "user" ? "is-user" : "is-agent"}`}>
                 {msg.role === "agent" && <span className="eva-row__badge">E</span>}
