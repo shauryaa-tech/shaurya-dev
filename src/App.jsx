@@ -5,7 +5,6 @@ import "lenis/dist/lenis.css";
 import { Toaster } from "sonner";
 import Nav from "./components/Nav";
 import Seo from "./components/Seo";
-import Cursor from "./components/Cursor";
 import AgentDock from "./components/AgentDock";
 import Home from "./pages/Home";
 import Contact from "./pages/Contact";
@@ -87,7 +86,6 @@ export default function App() {
         <Seo />
         <ScrollManager />
         <Tracker />
-        <Cursor />
         <Nav />
         <Routes>
           <Route path="/" element={<Home />} />

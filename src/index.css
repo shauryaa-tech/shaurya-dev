@@ -2047,18 +2047,6 @@ body {
   overflow-x: clip;
 }
 
-@media (pointer: fine) {
-  body,
-  a,
-  button,
-  input,
-  select,
-  textarea,
-  label {
-    cursor: none !important;
-  }
-}
-
 ::selection {
   background: rgba(0, 240, 255, 0.9);
   color: #030712;
