@@ -1,7 +1,6 @@
 import { Download, ArrowDown } from "lucide-react";
 import { KineticLine, Reveal } from "../components/Kinetic";
 import { scrollToId } from "../components/Nav";
-import HeroOrbit3D from "../components/HeroOrbit3D";
 import { useSiteContent } from "../site-content";
 
 export default function Hero() {
@@ -28,8 +27,7 @@ export default function Hero() {
       <div className="absolute bottom-0 right-0 w-[480px] h-[480px] rounded-full bg-viol/15 blur-[140px]" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-5 md:px-8 w-full py-16 lg:py-0">
-        <div className="hero-layout grid items-center gap-10 lg:gap-6">
-          <div className="max-w-3xl">
+        <div className="max-w-3xl">
             <Reveal y={12}>
               <div
                 data-testid="hero-status-badge"
@@ -96,11 +94,6 @@ export default function Hero() {
                 </div>
               ))}
             </Reveal>
-          </div>
-
-          <Reveal delay={0.35} className="hero-bot-wrap items-center justify-center">
-            <HeroOrbit3D />
-          </Reveal>
         </div>
       </div>
 
