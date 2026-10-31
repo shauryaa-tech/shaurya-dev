@@ -2964,59 +2964,131 @@ body::after {
   }
 }
 
-.particle-portrait {
+.hero-galaxy {
   position: relative;
   width: min(460px, 100%);
-  height: min(560px, 66vh);
+  aspect-ratio: 1;
   display: grid;
   place-items: center;
-  touch-action: none;
-  cursor: crosshair;
+  isolation: isolate;
 }
 
-.particle-portrait__aura {
+.hero-galaxy__nebula {
   position: absolute;
-  inset: 8% 10% 14%;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(0, 220, 255, 0.16), transparent 68%);
-  filter: blur(12px);
-  animation: particle-aura 4.5s ease-in-out infinite;
+  filter: blur(28px);
   pointer-events: none;
   z-index: 0;
 }
 
-.particle-portrait__canvas {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  height: 100%;
-  display: block;
+.hero-galaxy__nebula--a {
+  width: 58%;
+  height: 58%;
+  background: radial-gradient(circle, rgba(0, 240, 255, 0.35), transparent 70%);
+  animation: hg-breathe 5s ease-in-out infinite;
 }
 
-.particle-portrait__caption {
+.hero-galaxy__nebula--b {
+  width: 72%;
+  height: 52%;
+  right: 4%;
+  top: 18%;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.28), transparent 70%);
+  animation: hg-breathe 6.5s ease-in-out infinite reverse;
+}
+
+.hero-galaxy__nebula--c {
+  width: 40%;
+  height: 40%;
+  left: 8%;
+  bottom: 16%;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.2), transparent 70%);
+  animation: hg-breathe 4.2s ease-in-out infinite;
+}
+
+.hero-galaxy__stars {
   position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-galaxy__star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: #dff9ff;
+  box-shadow: 0 0 6px rgba(200, 250, 255, 0.8);
+  animation: hg-twinkle 3s ease-in-out infinite;
+}
+
+.hero-galaxy__core {
+  position: relative;
   z-index: 3;
-  bottom: 4px;
-  left: 50%;
-  transform: translateX(-50%);
+  width: 34%;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+}
+
+.hero-galaxy__core-glow {
+  position: absolute;
+  inset: -20%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 240, 255, 0.55), rgba(120, 80, 255, 0.2) 45%, transparent 70%);
+  filter: blur(6px);
+  animation: hg-breathe 3.6s ease-in-out infinite;
+}
+
+.hero-galaxy__core-ring,
+.hero-galaxy__core-ring--slow {
+  position: absolute;
+  inset: -8%;
+  border-radius: 50%;
+  border: 1px dashed rgba(0, 240, 255, 0.45);
+  animation: hg-spin 18s linear infinite;
+}
+
+.hero-galaxy__core-ring--slow {
+  inset: -22%;
+  border-style: solid;
+  border-color: rgba(168, 85, 247, 0.28);
+  animation-duration: 28s;
+  animation-direction: reverse;
+}
+
+.hero-galaxy__core-pulse {
+  position: absolute;
+  inset: 12%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #e8feff, #00e4ff 45%, #3a6dff 80%);
+  box-shadow:
+    0 0 30px rgba(0, 220, 255, 0.55),
+    inset 0 0 18px rgba(255, 255, 255, 0.35);
+  animation: hg-pulse 2.8s ease-in-out infinite;
+}
+
+.hero-galaxy__chip {
+  position: absolute;
+  z-index: 4;
+  bottom: -18%;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
   padding: 7px 12px;
   border-radius: 999px;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 10px;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: #9fdfff;
-  background: rgba(5, 12, 24, 0.55);
-  border: 1px solid rgba(0, 240, 255, 0.2);
-  backdrop-filter: blur(8px);
+  color: #baf8ff;
+  background: rgba(6, 14, 28, 0.72);
+  border: 1px solid rgba(0, 240, 255, 0.3);
   white-space: nowrap;
-  pointer-events: none;
 }
 
-.particle-portrait__dot {
+.hero-galaxy__chip-dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
@@ -3025,15 +3097,150 @@ body::after {
   animation: pulse-dot 2s infinite;
 }
 
-@keyframes particle-aura {
+.hero-galaxy__orbit {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 240, 255, 0.16);
+  animation: hg-spin linear infinite;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hero-galaxy__orbit.is-reverse {
+  animation-direction: reverse;
+  border-color: rgba(168, 85, 247, 0.18);
+}
+
+.hero-galaxy__sat {
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  margin-left: -4px;
+  border-radius: 50%;
+  background: #5ef8ff;
+  box-shadow: 0 0 12px rgba(94, 248, 255, 0.95);
+}
+
+.hero-galaxy__sat--b {
+  top: auto;
+  bottom: -3px;
+  width: 6px;
+  height: 6px;
+  margin-left: -3px;
+  background: #c4b5fd;
+  box-shadow: 0 0 10px rgba(196, 181, 253, 0.9);
+}
+
+.hero-galaxy__techs {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.hero-galaxy__tech {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(var(--tx, 0), var(--ty, 0));
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: #d7f9ff;
+  background: rgba(8, 16, 32, 0.55);
+  border: 1px solid rgba(0, 240, 255, 0.22);
+  backdrop-filter: blur(6px);
+  animation: hg-float-tech 5.5s ease-in-out infinite;
+  white-space: nowrap;
+}
+
+.hero-galaxy__circuit {
+  position: absolute;
+  inset: 6%;
+  width: 88%;
+  height: 88%;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.hero-galaxy__trace {
+  stroke-dasharray: 140;
+  stroke-dashoffset: 140;
+  animation: hg-trace 4.8s ease-in-out infinite;
+}
+
+@keyframes hg-breathe {
   0%,
   100% {
     opacity: 0.55;
-    transform: scale(0.95);
+    transform: scale(0.94);
   }
   50% {
     opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes hg-twinkle {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.4);
+  }
+}
+
+@keyframes hg-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes hg-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
     transform: scale(1.06);
+    filter: brightness(1.15);
+  }
+}
+
+@keyframes hg-float-tech {
+  0%,
+  100% {
+    transform: translate(var(--tx, 0), var(--ty, 0)) translateY(0);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate(var(--tx, 0), var(--ty, 0)) translateY(-8px);
+    opacity: 1;
+  }
+}
+
+@keyframes hg-trace {
+  0% {
+    stroke-dashoffset: 140;
+    opacity: 0.2;
+  }
+  40%,
+  60% {
+    stroke-dashoffset: 0;
+    opacity: 0.9;
+  }
+  100% {
+    stroke-dashoffset: -140;
+    opacity: 0.2;
   }
 }
 
