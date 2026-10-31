@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { MessageCircle, Send, Sparkles, X } from "lucide-react";
+import { Send, Sparkles, X } from "lucide-react";
 import { AGENT_PROMPTS, askPortfolioAgent } from "../lib/portfolioAgent";
 import { useSiteContent } from "../site-content";
 
@@ -14,11 +14,50 @@ function EvaMark({ size = 28 }) {
         </linearGradient>
       </defs>
       <rect x="4" y="4" width="40" height="40" rx="14" fill="url(#evaMarkG)" opacity="0.18" />
-      <path
-        d="M16 15h16v3.2H19.6V22H30v3H19.6v5.2H32.2V33H16V15z"
-        fill="#9af8ff"
-      />
+      <path d="M16 15h16v3.2H19.6V22H30v3H19.6v5.2H32.2V33H16V15z" fill="#9af8ff" />
       <circle cx="36" cy="12" r="3" fill="#5ef8ff" opacity="0.9" />
+    </svg>
+  );
+}
+
+function EvaLauncherIcon() {
+  return (
+    <svg className="eva-launcher__art" viewBox="0 0 72 72" width="54" height="54" aria-hidden>
+      <defs>
+        <linearGradient id="evaFabBg" x1="10" y1="6" x2="62" y2="66" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#10253f" />
+          <stop offset="0.55" stopColor="#0a1628" />
+          <stop offset="1" stopColor="#07101c" />
+        </linearGradient>
+        <linearGradient id="evaFabRing" x1="8" y1="8" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#9af8ff" />
+          <stop offset="0.5" stopColor="#00e4ff" />
+          <stop offset="1" stopColor="#3a7dff" />
+        </linearGradient>
+        <linearGradient id="evaFabFace" x1="22" y1="20" x2="50" y2="48" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#e8feff" />
+          <stop offset="1" stopColor="#7af0ff" />
+        </linearGradient>
+        <filter id="evaFabGlow" x="-30%" y="-30%" width="160%" height="160%">
+          <feDropShadow dx="0" dy="2" stdDeviation="2.2" floodColor="#00e5ff" floodOpacity="0.45" />
+        </filter>
+      </defs>
+
+      <circle cx="36" cy="36" r="33" fill="url(#evaFabRing)" opacity="0.22" className="eva-launcher__pulse" />
+      <circle cx="36" cy="36" r="28.5" fill="url(#evaFabBg)" stroke="url(#evaFabRing)" strokeWidth="1.6" />
+      <circle cx="36" cy="36" r="28.5" fill="url(#evaFabRing)" opacity="0.08" />
+
+      <g filter="url(#evaFabGlow)">
+        <rect x="21" y="19" width="30" height="26" rx="13" fill="url(#evaFabFace)" />
+        <path d="M30 45.5 L36 52 L42 45.5" fill="url(#evaFabFace)" />
+        <circle className="eva-launcher__eye" cx="30.5" cy="31" r="2.4" fill="#062033" />
+        <circle className="eva-launcher__eye" cx="41.5" cy="31" r="2.4" fill="#062033" />
+        <path d="M31.5 37.2c1.5 1.7 7.5 1.7 9 0" stroke="#062033" strokeWidth="1.8" strokeLinecap="round" fill="none" />
+      </g>
+
+      <circle cx="52" cy="20" r="5" fill="#0b1524" />
+      <circle cx="52" cy="20" r="3.2" fill="#34d399" className="eva-launcher__live" />
+      <path d="M17 18l1.2 2.8L21 22l-2.8 1.2L17 26l-1.2-2.8L13 22l2.8-1.2L17 18z" fill="#9af8ff" opacity="0.9" />
     </svg>
   );
 }
@@ -169,11 +208,7 @@ export default function AgentDock() {
           className="eva-launcher"
           onClick={() => setOpen(true)}
         >
-          <span className="eva-launcher__ring" aria-hidden />
-          <span className="eva-launcher__core">
-            <MessageCircle size={26} strokeWidth={2.2} />
-            <span className="eva-launcher__dot" />
-          </span>
+          <EvaLauncherIcon />
         </button>
       )}
     </div>
